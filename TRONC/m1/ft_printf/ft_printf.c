@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:21:29 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/12/03 22:37:23 by anturtsc         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:35:10 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ int	ft_printf(const char *format, ...)
 
 	i = 0;
 	len = 0;
-	if (format == 0)
+	if (!format)
 		return (-1);
 	va_start(args, format);
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%')
 		{
+			if (format[i + 1] == '\0')
+				return (len);
 			i++;
 			len = len + ft_fonction(format[i], args);
 		}
@@ -66,6 +68,14 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (len);
 }
+
+// int main()
+// {
+// 	ft_printf("je test %");
+// 	printf("\n");
+// 	printf("je test %");
+// 	printf("\n");
+// }
 
 // #include <stdio.h>
 // #include <limits.h>

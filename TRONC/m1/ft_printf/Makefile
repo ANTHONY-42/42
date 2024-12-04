@@ -32,3 +32,5 @@ fclean: clean
 
 
 re: fclean all
+
+.PHONY: re clean fclean all so
