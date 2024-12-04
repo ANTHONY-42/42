@@ -1,11 +1,12 @@
 char en memoire, c'est 1 byte (ou 1 octet) soit 8 bits;
 
-1 bits -> 0
-1 nibble -> 0000
-1 byte(octet) -> 0000 0000
-1 kiloctet	0000 x2000
-1 megaoctet	0000 x 250000
-1 gigabit	0000 x 250000
+1 bits		0
+1 nibble	0000
+1 byte(octet)	0000 0000
+1 kiloctet	0000 0000 x 125
+1 megabit	0000 0000 x 125,000
+1 gigabit	0000 0000 x 125,000,000
+1 terabit	0000 0000 x 125,000,000,000
 
 char nombre => 0000 0000
 
