@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 13:11:55 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/12/03 19:15:26 by anturtsc         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:43:32 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 //cspdiuxX%
 int	ft_printf(const char *format, ...);
 int	ft_put_c(int c);
-int	ft_put_s(char *str);
+int	ft_put_s(const char *str);
 int	ft_put_p(unsigned long long int nb);
 int	ft_put_d(int nbr);
 int	ft_put_i(int nb);

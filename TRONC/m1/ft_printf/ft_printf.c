@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:21:29 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/12/04 19:35:10 by anturtsc         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:52:59 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] == '%' && format[i + 1])
 		{
-			if (format[i + 1] == '\0')
-				return (len);
 			i++;
 			len = len + ft_fonction(format[i], args);
 		}
@@ -93,11 +91,9 @@ int	ft_printf(const char *format, ...)
 // // 	// p = printf("%p", "abcd");
 // // 	// printf("retour : %d", p);		
 // 	//int size = ft_printf("%p\n", &p);
-	
-// 	size = ft_printf(" %X %X %X %X %X %X %X", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+
 //  	//size = printf("%p\n", &p);
 // 	printf("size is %d\n", size);
-// 	size = printf(" %X %X %X %X %X %X %X", INT_MAX, INT_MIN, (int)LONG_MAX, (int)LONG_MIN, (unsigned int)ULONG_MAX, 0, -42);
 // 	printf("size is %d\n", size);
 // }
 //  /*      

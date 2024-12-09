@@ -6,13 +6,13 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:35:37 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/12/02 19:20:04 by anturtsc         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:43:09 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_put_s(char *str)
+int	ft_put_s(const char *str)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:37:57 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/12/03 19:47:32 by anturtsc         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:56:52 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_put_d(int nbr)
 {
 	long	nb;
-	int	count;
-	
+	int		count;
+
 	nb = nbr;
 	count = 0;
 	if (nb < 0)
