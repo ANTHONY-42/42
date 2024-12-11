@@ -5,26 +5,34 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;	
-	int	*nbr_read;
+	static char	*trace[BUFFER_SIZE] = {0};
+	char *line;
+//	char *buffer;
+	int	nbr_read;
 
 
-	nbr_read = read(fd, buffer, BUFFER_SIZE);
-	return (nbr_read);
+	strjoin(trace, buffer);
+	lis buffer jusquq un \n ou un \0;
+	stock avant \n premier dans line;
+	stock apres \n dans trace
+	
+	nbr_read = read(fd, line, BUFFER_SIZE);
+//	if (nb_read != BUUFER_SIZE)
+//			retrun(line)i
+//
+	return (line);
 }
 
 int main()
 {
 	int	fd;
-	char	*line;
+	char	line[50];
 
 	fd = open("test.txt", O_RDONLY);
-	while (1)
+	while (line)
 	{
 		line = get_next_line(fd);
 		printf("%s\n", line);
-		if (line == NULL)
-			break;
 	}
 	//printf("%s", line);
 	free(line);
