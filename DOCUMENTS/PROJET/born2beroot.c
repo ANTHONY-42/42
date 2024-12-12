@@ -32,6 +32,7 @@ command :
 - change username		: sudo usermod -l newname username
 - change fullname		: sudo chfn -f newfullname username
 - add password newuser		: sudo passwd username
+- delete user			: sudo userdel username
 - delete user + directory	: sudo userdel -r username
 - change directory		: sudo usermod -d /nouveau/chemin/nom_utilisateur username
 //-------------------------------------------------------------------------------
@@ -57,3 +58,26 @@ d'exécuter une command avec les privilèges d'un superutilisateur,
 
 utilisateur root	: su -
 
+//	CREER UN GROUPE
+- Gestion utilisateurs et permissions	: donner les meme permition a un groupe d'utilisateur;
+- Sécurisation et isolation des tâches	: separer les utilisateurs pour renforcer la securiter; 
+- Simplification de l'administration	: attribuer les permissions à tout le groupe en une fois;
+- Partage des ressources		: Partager facilement des ressources entre utilisateurs;
+- Automat et gestion des configuration	: appliquant des règles ou des configurations communes;
+- Gestion utilisateurs dans réseau virt	: classer et organiser les utilisateurs;
+
+command :
+- creer u groupe		: sudo groupadd groupname
+- voir les groupe actif		: getent group
+
+//	CREER UN USER
+command :
+- voir les user actif		: cut -d: -f1 /etc/passwd
+- voir les user  dans un group	: getent group groupname
+- voir le group de l'user actuel: groups
+- creer un newuser		: sudo adduser new_username
+- placer un user dans un group	: sudo usermod -aG groupname username
+- delete user			: sudo userdel username
+- delete user + directory	: sudo userdel -r username
+- verifier les regle mdp	: chage -l username
+- 
