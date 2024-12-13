@@ -46,6 +46,7 @@ VG : (Volume Group), groupe qui regroupe plusieur plusieur (PV);
 LV : (Logical Volume), volume logique 
 
 command :
+- aff partition			: lsblk
 - liste les volume physique	: sudo pvdisplay
 - liste les groupe de volume	: sudo vgdisplay
 - liste le volume logique	: sudo lvdisplay
@@ -150,7 +151,7 @@ utilisateurs connectés. Voici une explication ligne par ligne :
     Calcule le pourcentage de mémoire utilisée en divisant la mémoire 
 
 //fdisk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}') :
-    calcule la capacité totale des disques montés (GB) à partir de la sortie
+y attention to the password chosen, it must follo    calcule la capacité totale des disques montés (GB) à partir de la sortie
 
 //udisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}') :
     calcule l'espace utilisé des disques (MB)
