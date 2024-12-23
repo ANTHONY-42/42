@@ -1,16 +1,17 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include "libft.h"
 #ifndef	BUFFER_SIZE
 #define	BUFFER_SIZE 5
 
 // 	EXTRAIRE UNE LIGNE JUSQU'AU '\n'
-char	*extract_line(char *trace)
+char	*trace_in_line(char *trace)
 {
 	int	i;
 	char	*line;
 
+	i = 0;
 	if (!trace || trace[0] == '\0')
 		return (NULL);
 	while (trace[i] && trace[i] != '\n')
@@ -31,7 +32,7 @@ char	*extract_line(char *trace)
 }
 
 //	MAJ DE TRACE APRES '\n'
-char	*next_line(char	*trace)
+char	*maj_trace(char	*trace)
 {
 	int	i;
 	int	j;
@@ -46,7 +47,15 @@ char	*next_line(char	*trace)
 		free(trace);
 		return (NULL);
 	}
-	new_trace = malloc((ft_strlen))
+	new_trace = malloc((ft_strlen(trace) - i + 1) * sizeof(char));
+	if (!new_trace)
+		return (NULL);
+	i++; // passe le '\n'
+	while (trace[i])
+		new_trace[j++] = trace[i++];
+	new_trace[j] = '\0';
+	free(trace);
+	return (new_trace);
 }
 
 //	LIRE LES DONNEES AVEC READ;
@@ -54,47 +63,32 @@ char	*next_line(char	*trace)
 //	EXTRAIRE UNE LIGNE
 char	*get_next_line(int fd)
 {
+	static char	*trace;
 	char 		*buffer;
 	char 		*line;
-	static char	*trace;
 	int		nbr_read;
 	
-	// SECURITE
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-
-	// ALLOUE BUFFER DE LECTURE
+	
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 
-	trace = malloc(1 * sizeof(char))
-		if(!trace)
-			return (NULL);
-
-	while (1)
+	while (!ft_strchr(trace, '\n'))
 	{
-		nb_read = read(fd, buffer, BUFFER_SIZE);
-		buffer[nb_read] = '\0';
-		trace = ft_strjoin(trace, buffer); //cat 2 str
-		if (ft_strchr(trace, '\n') != NULL)
+		nb_read = read(fd, buffer, BUFFER_SIZE); // rempli buffer
+		if (nb_read <= 0)
 			break;
+		buffer[nb_read] = '\0';
+		trace = ft_strjoin(trace, buffer); //cat buffer a la suite de trace
 	}
-
-	1 fonction qui recupere la ligne;
-
-	line = trace;
+	free(buffer);
+	if (!trace || trace[0] == '\0')
+		return (NULL);
 	
-	
-	strjoin(trace, buffer);
-	lis buffer jusquq un \n ou un \0;
-	stock avant \n premier dans line;
-	stock apres \n dans trace
-	
-	nbr_read = read(fd, line, BUFFER_SIZE);
-//	if (nb_read != BUFFER_SIZE)
-//			retrun(line)i
-//
+	line = trace_in_line(trace);
+	trace = maj_trace(trace);
 	return (line);
 }
 
@@ -103,16 +97,12 @@ int main()
 	int	fd;
 	char	*line;
 
+	fd = open("test.txt", O_RDONLY);
+	line = get_next_line(fd);
 	if (fd < 0)
 		return (1);
 
-	fd = open("test.txt", O_RDONLY);
-	while (line)
-	{
-		line = get_next_line(fd);
-		printf("%s\n", line);
-		free(line);
-	}
-	//printf("%s", line);
+	printf("%s\n", line);
 	free(line);
+	close(fd);
 }

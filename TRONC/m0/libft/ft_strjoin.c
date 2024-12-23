@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "libft.h"
 #include <stdlib.h>
-#include "libft.h"
 
 // strjoin est une fonction qui cat 2 str
 char	*ft_strjoin(char const *s1, char const *s2)
