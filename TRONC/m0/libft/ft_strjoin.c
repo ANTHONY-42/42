@@ -12,7 +12,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-// strjoin est une fonction qui cat 2 str
+// strjoin est une fonction qui cat 2 str avec MALLOC
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;

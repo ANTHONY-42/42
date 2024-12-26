@@ -1,2 +1,0 @@
-hello je test la fontion
-get_next_line

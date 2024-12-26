@@ -9,26 +9,23 @@
 #define	BUFFER_SIZE 5
 #endif
 
-char *strjoin(const char *s1, const char *s2) {
-    if (!s1 && !s2)
+char *strjoin(const char *trace, const char *buffer) {
+    if (!trace && !buffer)
         return NULL;
-    if (!s1)
-        return strdup(s2); // Si s1 est NULL, on retourne une copie de s2
-    if (!s2)
-        return strdup(s1); // Si s2 est NULL, on retourne une copie de s1
+    if (!trace)
+        return strdup(buffer);
+    if (!buffer)
+        return strdup(trace);
 
-    size_t len1 = strlen(s1);
-    size_t len2 = strlen(s2);
+    size_t len1 = strlen(trace);
+    size_t len2 = strlen(buffer);
 
-    // Allouer suffisamment d'espace pour les deux chaînes + '\0'
-    char *result = malloc(len1 + len2 + 1);
+    char *result = malloc((len1 + len2 + 1) * sizeof(char));
     if (!result)
         return NULL;
 
-    // Copier s1 dans result
-    strcpy(result, s1);
-    // Ajouter s2 à la suite
-    strcat(result, s2);
+    strcpy(result, trace);
+    strcat(result, buffer);
 
     return result;
 }
@@ -36,7 +33,7 @@ char *strjoin(const char *s1, const char *s2) {
 // 	EXTRAIRE UNE LIGNE JUSQU'AU '\n'
 char	*trace_x_line(char *trace)
 {
-	int	i;
+	size_t	i;
 	char	*line;
 
 	i = 0;
@@ -93,33 +90,39 @@ static char	*get_next_line(int fd)
 {
 	static char	*trace;
 	char 		*buffer;
-	char 		*line;
 	int		nb_read;
+	char 		*line;
 
-	
 	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
 		return (NULL);
 
 	trace = malloc(1);
 	if (!trace)
 		return (NULL);
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
-
 	while (!strchr(trace, '\n'))
 	{
-		nb_read = read(fd, buffer, BUFFER_SIZE); // rempli buffer
-		if (nb_read <= 0)
+		nb_read = read(fd, buffer, BUFFER_SIZE);
+		if (nb_read < 0)
+			return NULL;
+		if (nb_read == 0)
 			break;
 		buffer[nb_read] = '\0';
-		trace = strjoin(trace, buffer); //cat buffer a la suite de trace
+		trace = strjoin(trace, buffer);
+		if (!trace)
+			return (NULL);
 	}
-	free(buffer);
+
 	if (!trace || trace[0] == '\0')
+	{
+		free(trace);
+		trace = NULL;
 		return (NULL);
-	
-	line = trace_in_line(trace);
+	}
+	line = trace_x_line(trace);
 	trace = maj_trace(trace);
 	return (line);
 }
@@ -128,13 +131,20 @@ int main()
 {
 	int	fd;
 	char	*line;
-
-	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
+	
+	fd = open("texte.txt", O_RDONLY);
 	if (fd < 0)
+	{
+		printf("Erreur open(fd)");
 		return (1);
-
-	printf("%s\n", line);
-	free(line);
+	}
+	
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s\n", line);
+		free(line);
+		return 0;
+	}
 	close(fd);
+	return (0);
 }
