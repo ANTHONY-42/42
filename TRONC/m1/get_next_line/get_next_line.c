@@ -1,150 +1,145 @@
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-//#include "libft.h"
+#include "get_next_line.h"
 
-#ifndef	BUFFER_SIZE
-#define	BUFFER_SIZE 5
-#endif
-
-char *strjoin(const char *trace, const char *buffer) {
-    if (!trace && !buffer)
-        return NULL;
-    if (!trace)
-        return strdup(buffer);
-    if (!buffer)
-        return strdup(trace);
-
-    size_t len1 = strlen(trace);
-    size_t len2 = strlen(buffer);
-
-    char *result = malloc((len1 + len2 + 1) * sizeof(char));
-    if (!result)
-        return NULL;
-
-    strcpy(result, trace);
-    strcat(result, buffer);
-
-    return result;
-}
-
-// 	EXTRAIRE UNE LIGNE JUSQU'AU '\n'
-char	*trace_x_line(char *trace)
+static char	*machine(int fd, char *buffer, char **trace, char *line)
 {
-	size_t	i;
-	char	*line;
-
-	i = 0;
-	if (!trace || trace[0] == '\0')
+	*trace = extract_trace(fd, buffer, *trace);
+	free(buffer);
+	buffer = NULL;
+	if (!trace)
 		return (NULL);
-	while (trace[i] && trace[i] != '\n')
-		i++;
-	line = malloc((i + 2) *  sizeof(char));
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (trace[i] && trace[i] != '\n')
-	{
-		line[i] = trace[i];
-		i++;
-	}
-	if (trace[i] == '\n')
-		line[i++] = '\n';
-	line[i] = '\0';
+	line = extract_line(*trace);
+	*trace = maj_trace(*trace);
 	return (line);
 }
 
-//	MAJ DE TRACE APRES '\n'
-char	*maj_trace(char	*trace)
-{
-	int	i;
-	int	j;
-
-	char	*new_trace;
-	i = 0;
-	j = 0;
-	while (trace[i] && trace[i] != '\n')
-		i++;
-	if (!trace[i])
-	{
-		free(trace);
-		return (NULL);
-	}
-	new_trace = malloc((strlen(trace) - i + 1) * sizeof(char));
-	if (!new_trace)
-		return (NULL);
-	i++; // passe le '\n'
-	while (trace[i])
-		new_trace[j++] = trace[i++];
-	new_trace[j] = '\0';
-	free(trace);
-	return (new_trace);
-}
-
-//	LIRE LES DONNEES AVEC READ;
-//	MAJ DE TRACE;
-//	EXTRAIRE UNE LIGNE
 static char	*get_next_line(int fd)
 {
+	char		*buffer;
 	static char	*trace;
-	char 		*buffer;
-	int		nb_read;
-	char 		*line;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	trace = NULL;
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 
-	trace = malloc(1);
+	if (!trace)
+	{
+		trace = malloc(1);
+		if (!trace)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		trace[0] = '\0';
+	}
+	trace = extract_trace(fd, buffer, trace);
+	free(buffer);
+	buffer = NULL;
 	if (!trace)
 		return (NULL);
-	while (!strchr(trace, '\n'))
-	{
-		nb_read = read(fd, buffer, BUFFER_SIZE);
-		if (nb_read < 0)
-			return NULL;
-		if (nb_read == 0)
-			break;
-		buffer[nb_read] = '\0';
-		trace = strjoin(trace, buffer);
-		if (!trace)
-			return (NULL);
-	}
-
-	if (!trace || trace[0] == '\0')
-	{
-		free(trace);
-		trace = NULL;
-		return (NULL);
-	}
-	line = trace_x_line(trace);
-	trace = maj_trace(trace);
+	line = machine(fd, buffer, &trace, line);
+	free(buffer);
 	return (line);
+}
+
+
+
+// Fonction pour lire l'état de progression
+int	read_state(const char *state_file)
+{
+    FILE *file = fopen(state_file, "r");
+    int line_num = 0;
+
+    if (file)
+    {
+        fscanf(file, "%d", &line_num);
+        fclose(file);
+    }
+
+    return line_num;
+}
+
+// Fonction pour sauvegarder l'état de progression
+void save_state(const char *state_file, int line_num)
+{
+    FILE *file = fopen(state_file, "w");
+
+    if (file)
+    {
+        fprintf(file, "%d", line_num);
+        fclose(file);
+    }
 }
 
 int main()
 {
+    const char *state_file = "state.txt";
+    int fd;
+    char *line;
+    int line_num;
+
+    // Lire l'état actuel
+    line_num = read_state(state_file);
+
+    fd = open("texte.txt", O_RDONLY);
+    if (fd < 0)
+    {
+        printf("Erreur open(fd)\n");
+        return (1);
+    }
+
+    // Lire les lignes jusqu'à atteindre la bonne
+    for (int i = 0; i <= line_num; i++)
+    {
+        line = get_next_line(fd);
+        if (!line)
+        {
+            printf("Fin du fichier ou erreur.\n");
+            close(fd);
+            return (0);
+        }
+
+        if (i == line_num)
+        {
+            printf("%s", line); // Afficher la ligne actuelle
+            free(line);
+        }
+        else
+        {
+            free(line); // Libérer les lignes précédentes
+        }
+    }
+
+    // Sauvegarder l'état pour la prochaine exécution
+    save_state(state_file, line_num + 1);
+
+    close(fd);
+    return (0);
+}
+
+/*
+int main()
+{
 	int	fd;
 	char	*line;
-	
-	fd = open("texte.txt", O_RDONLY);
+
+	fd = open("teste2.txt", O_RDONLY);
 	if (fd < 0)
 	{
 		printf("Erreur open(fd)");
 		return (1);
 	}
-	
-	while ((line = get_next_line(fd)) != NULL)
+
+	while (line != NULL)
 	{
-		printf("%s\n", line);
+		line = get_next_line(fd);
+		printf("%s", line);
 		free(line);
-		return 0;
+		close(fd);
+		return (0);
 	}
-	close(fd);
-	return (0);
-}
+}*/

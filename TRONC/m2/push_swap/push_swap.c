@@ -1,0 +1,3 @@
+
+struct	pile_a()
+{}
