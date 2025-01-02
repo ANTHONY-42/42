@@ -50,9 +50,7 @@ char    *extract_line(char *trace)
 		line[i] = trace[i];
 		i++;
 	}
-	if (trace[i] == '\n')
-		line[++i] = '\0';
-//	line[i] = '\0';
+	line[i] = '\0';
 	return (line);
 }
 

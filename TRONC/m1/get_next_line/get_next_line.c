@@ -36,11 +36,6 @@ static char	*get_next_line(int fd)
 		}
 		trace[0] = '\0';
 	}
-	trace = extract_trace(fd, buffer, trace);
-	free(buffer);
-	buffer = NULL;
-	if (!trace)
-		return (NULL);
 	line = machine(fd, buffer, &trace, line);
 	free(buffer);
 	return (line);
