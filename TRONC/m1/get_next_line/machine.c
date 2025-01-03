@@ -40,8 +40,10 @@ char    *extract_line(char *trace)
 
 	while (trace[len] && trace[len] != '\n')
 		len++;
+	if (trace[len] == '\n')
+		len++;
 
-	line =  malloc((len + 2) * sizeof(char));
+	line =  malloc((len + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
 
@@ -50,6 +52,8 @@ char    *extract_line(char *trace)
 		line[i] = trace[i];
 		i++;
 	}
+	if (trace[i])
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
@@ -58,7 +62,6 @@ char    *maj_trace(char *trace)
 {
 	int     i;
 	int     j;
-	int     len;
 	char    *new_trace;
 
 	i = 0;
@@ -70,13 +73,18 @@ char    *maj_trace(char *trace)
 		free(trace);
 		return (NULL);
 	}
-	new_trace = malloc(ft_strlen(trace) - i + 1);
-	if (!new_trace)
-		return (NULL);
 	i++;
-	while (trace[i] && trace[i] != '\n')
+	new_trace = malloc(ft_strlen(&trace[i]) + 1);
+	if (!new_trace)
+	{
+		free(trace);
+		return (NULL);
+	}
+
+	while (trace[i])
 		new_trace[j++] = trace[i++];
 	new_trace[j] = '\0';
+	
 	free(trace);
 	return (new_trace);
 }

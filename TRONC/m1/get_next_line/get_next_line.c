@@ -5,7 +5,7 @@ static char	*machine(int fd, char *buffer, char **trace, char *line)
 	*trace = extract_trace(fd, buffer, *trace);
 	free(buffer);
 	buffer = NULL;
-	if (!trace)
+	if (!*trace)
 		return (NULL);
 	line = extract_line(*trace);
 	*trace = maj_trace(*trace);
@@ -18,7 +18,6 @@ static char	*get_next_line(int fd)
 	static char	*trace;
 	char		*line;
 
-	trace = NULL;
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 
@@ -37,7 +36,6 @@ static char	*get_next_line(int fd)
 		trace[0] = '\0';
 	}
 	line = machine(fd, buffer, &trace, line);
-	free(buffer);
 	return (line);
 }
 
