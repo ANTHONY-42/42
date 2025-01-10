@@ -1,24 +1,38 @@
-# ifndef GET_NEXT_LINE_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/03 16:45:31 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/01/09 16:06:34 by anturtsc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# endif
+
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 5
+#  define BUFFER_SIZE 5
 # endif
 
 // BIBLIOTHEQUE
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-// FONCTION_GNL
-int	ft_strlen(char *str);
+//	get_next_line_utils
+int		ft_strlen(char *str);
+char	*ft_strcpy(char *s1, char *s2);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *str);
-char	*ft_strjoin(const char *trace, const char *buffer);
+char	*ft_strjoin(char *trace, char *buffer);
 
-// MACHINE
+//	get_next_line
 char	*extract_trace(int fd, char *buffer, char *trace);
 char	*extract_line(char *trace);
 char	*maj_trace(char *trace);
+char	*machine(int fd, char *buffer, char **trace, char *line);
+char	*get_next_line(int fd);
+
+#endif
