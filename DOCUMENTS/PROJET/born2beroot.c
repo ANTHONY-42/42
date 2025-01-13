@@ -3,7 +3,8 @@
 "	1. PARTIE INSTALLATION	"
 
 - aff info vm	: hostnamectl
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	HOSTNAME (nom de la machine)
 	Permet de donner un nom à ta machine;
 
@@ -11,17 +12,20 @@ command :
 - verifie l'hostname			: hostname
 - modification hostname temporairement	: sudo hostname new_name
 - modification hostname permanent 	: sudo hostnamectl set-hostname new_name
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	DOMAINE
 	Adresse complete d'un reseaux;
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	FULLNAME (nom complet d'utilisateur)
 	information sur l'utilisateur;
 
 command :
 - change username		: sudo chfn -f "full_name" username
 - add nom complet a l'USERNAME	: sudo useradd -c "full_name" username
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	USERNAME (nom d'utilisateur)
 	(login): pseudo unique pour ce connecter ou s'identifier dans le terminal;
 
@@ -36,7 +40,8 @@ command :
 - delete user			: sudo userdel username
 - delete user + directory	: sudo userdel -r username
 - change directory		: sudo usermod -d /nouveau/chemin/nom_utilisateur username
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	LVM (Logical Volume Management)
 	systeme de gestion disque dur;
 redimentionne, fusionne, divise, partitionne
@@ -50,9 +55,12 @@ command :
 - liste les volume physique	: sudo pvdisplay
 - liste les groupe de volume	: sudo vgdisplay
 - liste le volume logique	: sudo lvdisplay
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 "	2. PARTIE CONFIGURATION	"
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	INSTALL SUDO (SuperUser Do)
 La command sudo permet à un utilisateur (non-administrateur (ou ayant peu de privilèges))
 d'exécuter une command avec les privilèges d'un superutilisateur,
@@ -60,6 +68,8 @@ d'exécuter une command avec les privilèges d'un superutilisateur,
 
 utilisateur root	: su -
 
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	UFW
 PARE-FEU QUI BLOCK LES PORT
 
@@ -68,6 +78,8 @@ command :
 - activer un port	: sudo ufw allow 4242 (numero du port)
 - aff info port act	: sudo ufw status numbered
 
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	SSH
 command :
 - aff info ssh	: systemctl status ssh
@@ -89,6 +101,8 @@ command :
 - creer u groupe		: sudo groupadd groupname
 - voir les groupe actif		: getent group
 
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	CREER UN USER
 command :
 - voir les user actif		: cut -d: -f1 /etc/passwd
@@ -101,6 +115,8 @@ command :
 - verifier les regle mdp	: chage -l username
 - 
 
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 //	POLITIQUE DES MDP
 PAM			= (Pluggable Authentication Module) est un gestionnaire de mdp sous linux;
 libpam-pwquality	= module qui reforce la securiter des mdp et impose des regle;
@@ -110,18 +126,8 @@ command :
 - ouvrir libpam-pwquality	= sudo vim /etc/pam.d/common-password;
 - aff politique de mdp		= sudo chage -l
 - modif politique de mdp	= sudo chage -m 2 -M 30 -w 7 antutsc
-
-
-
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------
-
-
-
 //	SCRIPT
 command :
 - execut le script	= sudo /usr/local/bin/monitoring.sh
