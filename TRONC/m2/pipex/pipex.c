@@ -18,18 +18,24 @@ int	main(int argc, char **argv)
 	infile = open(argv[1], O_RDONLY);
 	if (infile < 0)
 	{
-		printf("erreur infile");
-		return (1);
+		return ((printf("erreur infile"), 1);
 	}
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile < 0)
 	{
-		printf("erreur outfile");
 		close(infile);
-		return (1);
+		return ((printf("erreur outfile"), 1);
 	}
-	printf("Pipe created: read = %d, write = %d\n", pipe_fd[0], pipe_fd[1]);
+
+	pid_t pid1 = fork();
+	if (pid1 == 0)
+		first_child(infile, pipe_fd, argv[2], envp);
+
+	pid_t pid2 = fork();
+	if (pid2 == 0)
+		second_child(outfile, pipe_fd, argv[3], envp);
+	
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	close(infile);
