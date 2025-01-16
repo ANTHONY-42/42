@@ -31,7 +31,18 @@ char *S = malloc(8)
 |
 |
 
-S[0] = *(S + 12)
+S[0] = *(S + 0)
 S[1] = *(S + 1) (S + 1 * sizeof(char))
+S[12] = *(S + 12)
+
+int	a;
+
+int a; ->CPU va allouer une zone de 4 bytes pour stocker dans la stack ton a
+int *ptrA; ->CPU vient de creer une variable speciale 'pointeur' qui peut pointer sur des var de type INT
+ptrA = &a;
+
+& = recup l'adresse d'une variable
+* = dereferencer un pointeur pour acceder a la zone memoire pointee par ce pointeur 
+
 
 free(S);
