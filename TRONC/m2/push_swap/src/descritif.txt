@@ -1,0 +1,85 @@
+Description des fichiers et des fonctions
+
+1. main.c
+
+Ce fichier est le point d'entrée du programme.
+
+Fonctions principales :
+
+    int main(int argc, char **argv) :
+        Vérifie les arguments passés au programme.
+        Initialise les piles (stack A et stack B).
+        Appelle les fonctions de tri.
+        Libère la mémoire.
+
+2. parsing.c
+
+Gère la vérification et le parsing des arguments.
+
+Fonctions principales :
+
+    void check_arguments(int argc, char **argv) :
+        Vérifie que les arguments sont valides (pas de doublons, que des entiers, etc.).
+    t_stack *initialize_stack(char **argv) :
+        Crée une pile à partir des arguments passés en ligne de commande.
+
+3. operations.c
+
+Implémente les opérations sur les piles définies dans le sujet (sa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr).
+
+Fonctions principales :
+
+    void sa(t_stack *stack_a) :
+        Swap les deux premiers éléments de la pile A.
+    void ra(t_stack *stack_a) :
+        Effectue une rotation sur la pile A.
+    void pb(t_stack *stack_a, t_stack *stack_b) :
+        Pousse le premier élément de A vers B.
+    (Ajouter les autres opérations nécessaires.)
+
+4. sort.c
+
+Implémente l'algorithme de tri.
+
+Fonctions principales :
+
+    void sort_small_stack(t_stack *stack_a, t_stack *stack_b) :
+        Implémente le tri pour une petite pile (par exemple, 3 ou 5 éléments).
+    void sort_large_stack(t_stack *stack_a, t_stack *stack_b) :
+        Implémente le tri pour une grande pile (par exemple, avec l'algorithme de tri par radix ou une autre méthode adaptée).
+    int is_sorted(t_stack *stack) :
+        Vérifie si la pile est triée.
+
+5. utils.c
+
+Fonctions utilitaires qui seront appelées dans plusieurs fichiers.
+
+Fonctions principales :
+
+    int ft_atoi(const char *str) :
+        Convertit une chaîne en entier (ou utilise celle de la libft si incluse).
+    void free_stack(t_stack *stack) :
+        Libère la mémoire allouée pour une pile.
+    void print_stack(t_stack *stack) :
+        Affiche une pile pour le débogage.
+
+6. error.c
+
+Gère la gestion des erreurs.
+
+Fonctions principales :
+
+    void error_and_exit(char *message) :
+        Affiche un message d'erreur et quitte le programme proprement.
+    int is_valid_number(char *str) :
+        Vérifie si une chaîne représente un nombre valide.
+
+7. push_swap.h
+
+Le fichier d'en-tête principal.
+
+Contenu :
+
+    Définitions des structures, comme t_stack.
+    Prototypes des fonctions déclarées dans les fichiers .c.
+    Macros utiles.

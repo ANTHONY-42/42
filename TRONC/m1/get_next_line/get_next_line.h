@@ -6,7 +6,7 @@
 /*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 16:45:31 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/01/09 16:06:34 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:38:08 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 // BIBLIOTHEQUE
 # include <stdlib.h>
+# include <stdio.h>
+# include <fcntl.h>
 # include <unistd.h>
 
 //	get_next_line_utils
@@ -34,5 +36,5 @@ char	*extract_line(char *trace);
 char	*maj_trace(char *trace);
 char	*machine(int fd, char *buffer, char **trace, char *line);
 char	*get_next_line(int fd);
-
+int file_exists(const char *filename);
 #endif
