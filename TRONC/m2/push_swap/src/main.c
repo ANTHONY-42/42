@@ -10,7 +10,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (perror("Erreur : argc < 2"), 1);
 
-	stack_a = initialize_stack(argv);
+	stack_a = init_stack(argv);
 	if (!stack_a)
 	{
 		free_stack(stack_a);
@@ -31,6 +31,4 @@ int	main(int argc, char **argv)
 		free_stack(stack_b);
 		return (0);
 	}
-
-
 }
