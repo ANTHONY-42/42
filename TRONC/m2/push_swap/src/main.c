@@ -11,13 +11,13 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (perror("Erreur : argc < 2"), 1);
 		
+	
 	// Initialise les piles
 	stack_a = init_stack(argv);
 	if (!stack_a)
 	{
 		free_stack(stack_a);
-		ft_putstr_fd("Erreur : Memory allocation failed\n", 2);
-		return (1);
+		return (perror("Erreur : Memory allocation failed\n"), 1);
 	}
 
 	stack_b = creat_stack(stack_a->size);
