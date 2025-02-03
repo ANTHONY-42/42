@@ -1,15 +1,109 @@
 #include <unistd.h>
 
+void	free_stack(t_stack *stack)
+{
+	t_node	*current;
+	t_node	*tmp;
+
+	if (stack)
+	{
+		current = stack->head;
+		while (current)
+		{
+			tmp = current->next;
+			free(current);
+			current = tmp;
+		}
+		free(stack);
+	}
+}
+
+t_node	*create_node(int value)
+{
+	t_node	*node;
+
+	node = malloc(sizeof(t_node));
+	if (!node)
+		return (NULL);
+	node->value = value;
+	node->next = NULL;
+	return (node);
+}
+
+void	add_node_back(t_stack *stack, t_node *new_node)
+{
+	t_node	*current;
+
+	if (!stack->head)
+		stack->head = new_node;
+	else
+	{
+		current = stack->head;
+		while (current->next)
+			current = current->next;
+		current->next = = new_node;
+	}
+	stack->size++;
+}
+
+// verifie si cest un nombre
+int	is_valid_number(char *str)
+{
+	int	i;
+	i = 0;
+
+	if (str[i] == '-' || str[i] == '+') 
+		i++;
+	if (!str[i])
+		return (0)
+	
+	while (str[i])
+	{
+		if (!(c >= '0' && c <= '9'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 // 	INITIALISE LA STACK
 t_stack	*init_stack(char **argv)
 {
 	t_stack	*stack;
+	t_node	*new_node;
+
+	int	i;
+	int	value;
 
 	stack = malloc(sizeof(t_stack));
 	if (!stack)
 		return (NULL);
+
 	stack->head = NULL;
 	stack->size = 0;
+	i = 1; // On commence à argv[1] car argv[0] est le nom du programme
+	
+	
+	while (argv[i])
+	{
+		if (!is_valid_number(argv[i]))
+		{
+			free_stack(stack);
+			ft_putstr_fd("Error\n", 2);
+			exit(1);
+		}
+
+
+		value = ft_atoi(argv[i]);
+		new_node = creat_node(value);
+		if (!new_node)
+		{
+			free_stack(stack);
+			exit(1);
+		}
+		add_node_back(stack, new_node);
+		i++;
+	}
 	return (stack);
 }
 
