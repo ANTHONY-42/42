@@ -46,26 +46,6 @@ void	add_node_back(t_stack *stack, t_node *new_node)
 	stack->size++;
 }
 
-// verifie si cest un nombre
-int	is_valid_number(char *str)
-{
-	int	i;
-	i = 0;
-
-	if (str[i] == '-' || str[i] == '+') 
-		i++;
-	if (!str[i])
-		return (0)
-	
-	while (str[i])
-	{
-		if (!(c >= '0' && c <= '9'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 // 	INITIALISE LA STACK
 t_stack	*init_stack(char **argv)
 {
@@ -86,7 +66,7 @@ t_stack	*init_stack(char **argv)
 	
 	while (argv[i])
 	{
-		if (!is_valid_number(argv[i]))
+		if (!is_valid_number(argv[i], &a))
 		{
 			free_stack(stack);
 			ft_putstr_fd("Error\n", 2);
@@ -115,11 +95,6 @@ t_stack	*create_stack(int size)
 
 //	VERIFIE SI LA PILE ES DEJA TRIER
 int	is_sorted(t_stack *stack)
-{
-	
-}
-
-void	free_stack(t_stack *stack)
 {
 	
 }
