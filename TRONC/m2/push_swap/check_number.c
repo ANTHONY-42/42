@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 // verifie si c'est un nombre;
 int     is_number(char *str)
 {
@@ -30,12 +32,11 @@ int	is_int(char *str)
 }
 
 // verifie si c'est un double;
-int	is_double(int nb, t_stack **a)
+int	is_double(int nb, t_stack *a)
 {
-	t_stack	*check_double;
-
-	check_double = *a;
-	if (!(*a))
+	t_node	*check_double;
+	check_double = a->head;
+	if (!a)
 		return (0);
 	while (check_double)
 	{
@@ -47,7 +48,7 @@ int	is_double(int nb, t_stack **a)
 }
 
 // appel de fonction : verifie si c'est un nombre;
-int	is_valid_number(char	*argv, t_stack **a)
+int	number_valid(char *argv, t_stack *stack_a)
 {
 	if (!(is_number(argv)))
 		return (0);
@@ -55,7 +56,7 @@ int	is_valid_number(char	*argv, t_stack **a)
 	if (!(is_int(argv)))
 		return (0);
 
-	if (is_double(ft_atoi(argv), &a))
+	if (is_double(ft_atoi(argv), stack_a))
 		return (0);
 	return (1);
 }

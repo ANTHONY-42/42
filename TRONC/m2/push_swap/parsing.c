@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include "push_swap.h"
 
 void	free_stack(t_stack *stack)
 {
@@ -41,60 +42,69 @@ void	add_node_back(t_stack *stack, t_node *new_node)
 		current = stack->head;
 		while (current->next)
 			current = current->next;
-		current->next = = new_node;
+		current->next = new_node;
 	}
 	stack->size++;
 }
 
-// 	INITIALISE LA STACK
-t_stack	*init_stack(char **argv)
+//	CREER UN STACK VIDE
+t_stack	*create_stack_b(int size)
 {
-	t_stack	*stack;
+	t_stack	*stack_b;
+
+	stack_b = malloc(sizeof(t_stack));
+	if (!stack_b)
+		return (NULL);
+	stack_b->head = NULL;
+	stack_b->size = size;
+
+	return (stack_b);
+}
+
+// 	INITIALISE LA STACK
+t_stack	*init_stack_a(char **argv)
+{
+	t_stack	*stack_a;
 	t_node	*new_node;
 
 	int	i;
 	int	value;
 
-	stack = malloc(sizeof(t_stack));
-	if (!stack)
+	stack_a = malloc(sizeof(t_stack));
+	if (!stack_a)
 		return (NULL);
 
-	stack->head = NULL;
-	stack->size = 0;
-	i = 1; // On commence à argv[1] car argv[0] est le nom du programme
+	stack_a->head = NULL;
+	stack_a->size = 0;
+	i = 1; 
 	
 	
 	while (argv[i])
 	{
-		if (!is_valid_number(argv[i], &a))
+		if (!number_valid(argv[i], stack_a))
 		{
-			free_stack(stack);
-			ft_putstr_fd("Error\n", 2);
+			free_stack(stack_a);
+			perror("Erreur : init stack_a\n");
 			exit(1);
 		}
-
 
 		value = ft_atoi(argv[i]);
-		new_node = creat_node(value);
+		new_node = create_node(value);
 		if (!new_node)
 		{
-			free_stack(stack);
+			free_stack(stack_a);
 			exit(1);
 		}
-		add_node_back(stack, new_node);
+		add_node_back(stack_a, new_node);
 		i++;
 	}
-	return (stack);
+	return (stack_a);
 }
 
-//	CREER UN STACK VIDE
-t_stack	*create_stack(int size)
-{
-	
-}
 
 //	VERIFIE SI LA PILE ES DEJA TRIER
 int	is_sorted(t_stack *stack)
 {
 	
 }
+
