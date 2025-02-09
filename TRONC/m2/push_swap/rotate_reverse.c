@@ -14,8 +14,8 @@ void	rra(t_stack *stack_a)
 	tmp = current->next;
 	current->next = NULL;
 
-	tmp->next = stack_b->head;
-	stack_b->head = tmp;
+	tmp->next = stack_a->head;
+	stack_a->head = tmp;
 }
 
 void	rrb(t_stack *stack_b)
@@ -36,7 +36,7 @@ void	rrb(t_stack *stack_b)
 	stack_b->head = tmp;
 }
 
-void	rrr(t_stack *stack_a, t_stack stack_b)
+void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	rra(stack_a);
 	rrb(stack_b);

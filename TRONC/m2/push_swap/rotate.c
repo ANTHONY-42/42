@@ -1,8 +1,8 @@
-#include "push_swap.c"
+#include "push_swap.h"
 
 void	ra(t_stack *stack_a)
 {
-	if (!stack_a || !stack_a->head || stack_a->head->next)
+	if (!stack_a || !stack_a->head || !stack_a->head->next)
 		return;
 
 	t_node *tmp = stack_a->head;

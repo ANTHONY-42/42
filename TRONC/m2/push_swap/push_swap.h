@@ -53,4 +53,9 @@ void    rra(t_stack *stack_a);
 void    rrb(t_stack *stack_b);
 void    rrr(t_stack *stack_a, t_stack *stack_b);
 
+// sort min
+void sort_3(t_stack *stack_a);
+void sort_4_5(t_stack *stack_a, t_stack *stack_b);
+int find_min(t_stack *stack);
+
 #endif

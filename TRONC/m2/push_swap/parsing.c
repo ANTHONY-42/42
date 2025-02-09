@@ -56,7 +56,7 @@ t_stack	*create_stack_b(int size)
 	if (!stack_b)
 		return (NULL);
 	stack_b->head = NULL;
-	stack_b->size = size;
+	stack_b->size = 0;
 
 	return (stack_b);
 }

@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 		free_stack(stack_a);
 		return (perror("Erreur : malloc stack_b"), 1);
 	}
+
 	/*
 	   if (is_sorted(stack_a))
 	   {
@@ -33,11 +34,11 @@ int	main(int argc, char **argv)
 	   return (0);
 	   }*/
 
-	printf("Stack A :\n");
+	printf("Avant tri :\n");
 	print_stack(stack_a);
-	printf("Stack B (vide) :\n");
-	print_stack(stack_b);
-
+	sort_4_5(stack_a, stack_b);
+	printf("Après tri :\n");
+	print_stack(stack_a);
 	// Libération de la mémoire
 	free_stack(stack_a);
 	free_stack(stack_b);
