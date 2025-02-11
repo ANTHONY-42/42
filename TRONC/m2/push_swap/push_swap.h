@@ -9,14 +9,15 @@
 // STRUCTURE POUR LA LISTE CHAÎNÉE
 typedef struct s_node
 {
-    int             value;
-    struct s_node   *next;
+	int             value;
+	int		index;
+	struct s_node   *next;
 } t_node;
 
 typedef struct s_stack
 {
-    t_node  *head;
-    int     size;
+	t_node  *head;
+	int     size;
 } t_stack;
 
 // ✅ PROTOTYPES DES FONCTIONS
