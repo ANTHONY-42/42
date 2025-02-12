@@ -49,5 +49,5 @@ void radix_sort(t_stack *stack_a, t_stack *stack_b)
 		while (stack_b->size > 0)
 			pa(stack_a, stack_b);  // On ramène tous les éléments dans stack_a
 	}
-}
+
 
