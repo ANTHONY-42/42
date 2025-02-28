@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void index_stack(t_stack *stack)
+void	index_stack(t_stack *stack)
 {
 	t_node *current = stack->head;  // Pointeur pour parcourir chaque élément de la pile
 	t_node *compare;                // Pointeur pour comparer avec les autres éléments
@@ -23,7 +23,7 @@ void index_stack(t_stack *stack)
 	}
 }
 
-void radix_sort(t_stack *stack_a, t_stack *stack_b)
+void	radix_sort(t_stack *stack_a, t_stack *stack_b)
 {
 	int max_bits = 0;
 	int size = stack_a->size;
