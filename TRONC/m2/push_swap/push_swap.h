@@ -1,62 +1,105 @@
 #ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#define PUSH_SWAP_H
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h> // À supprimer pour la version finale
-# include <limits.h> // Pour INT_MAX et INT_MIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
 
-// STRUCTURE POUR LA LISTE CHAÎNÉE
-typedef struct s_node
+
+// 	STRUCTURE
+typedef struct	s_node
 {
-	int             value;
+	int		value;
 	int		index;
-	struct s_node   *next;
+	struct	s_node	*next;
 } t_node;
 
-typedef struct s_stack
+typedef struct	s_stack
 {
-	t_node  *head;
-	int     size;
+	t_node	*start;
+	int	size;
 } t_stack;
 
-// ✅ PROTOTYPES DES FONCTIONS
+//----------------------------------------------------------------------
+//	PARSING
+//----------------------------------------------------------------------
 
-// check_number.c
-int     is_number(char *str);
-int     is_int(char *str);
-int     is_double(int nb, t_stack *a);
-int     number_valid(char *argv, t_stack *a);
+//	PARSING
+void	parsing(int ac, char **av, t_stack **stack_a, t_stack **stack_b);
+int	check_arg(char **tab);
 
-// parsing.c
-t_stack *init_stack_a(char **argv);
-t_stack *create_stack_b(int size);
-t_node  *create_node(int value);
-void    add_node_back(t_stack *stack, t_node *new_node);
-void    free_stack(t_stack *stack);
-int     is_sorted(t_stack *stack);
+// 	CHECK_ARG
+int	check_arg(char **tab);
+int	check_number(char **tab, char *arg, int i);
+int	is_number(char *str);
+int	is_int(char *str);
+int	is_double(char **tab, int nbr, int i);
 
-// utils.c
-int     ft_atoi(const char *str);
-long    ft_atol(const char *str);
-void	print_stack(t_stack *stack);
+//	FT_SPLIT
+char	**ft_split(char *str);
+char	*epurstr(char *str);
+int	count_word(char *str);
+int	count_letter(char *str);
+int	is_sep(char c);
 
-// opérations (à implémenter)
+//	CREATE_STACK
+t_stack	*create_stack_a(char **av);
+t_stack	*create_stack_b(void);
+t_node	*create_node(int value);
+void	add_node(t_stack *stack, t_node *new_node);
+void	free_stack(t_stack *stack);
+
+//----------------------------------------------------------------------
+//	PUSH_SWAP
+//----------------------------------------------------------------------
+
+//	PUSH_SWAP
+void	push_swap(t_stack *stack_a, t_stack *stack_b);
+int	is_sorted(t_stack *stack_a);
+
+//	SORT_5
+void	sort_5(t_stack *stack_a, t_stack *stack_b);
+void	sort_3(t_stack *stack_a);
+int	min(t_stack *stack);
+
+//	RADIX_SORT
+void	radix_sort(t_stack *stack_a, t_stack *stack_b);
+void	index_stack(t_stack *stack);
+int	count_bits(int size);
+
+//----------------------------------------------------------------------
+//	OPERATION
+//----------------------------------------------------------------------
+
+//	SWAP
+int     swap(t_stack *stack);
 void    sa(t_stack *stack_a);
 void    sb(t_stack *stack_b);
 void    ss(t_stack *stack_a, t_stack *stack_b);
+
+//	PUSH
+int     push(t_stack *stack_1, t_stack *stack_2);
 void    pa(t_stack *stack_a, t_stack *stack_b);
 void    pb(t_stack *stack_a, t_stack *stack_b);
+
+//	ROTATE
+int     rotate(t_stack *stack);
 void    ra(t_stack *stack_a);
 void    rb(t_stack *stack_b);
 void    rr(t_stack *stack_a, t_stack *stack_b);
+
+//	REVERSE_ROTATE
+int     reverse_rotate(t_stack *stack);
 void    rra(t_stack *stack_a);
 void    rrb(t_stack *stack_b);
 void    rrr(t_stack *stack_a, t_stack *stack_b);
 
-// sort min
-void sort_3(t_stack *stack_a);
-void sort_4_5(t_stack *stack_a, t_stack *stack_b);
-int find_min(t_stack *stack);
+
+//	UTILS
+long	ft_atol(const char *str);
+int	ft_atoi(const char *str);
+void	print_stack(t_stack *stack);
+int	ft_strlen(char *str);
 
 #endif

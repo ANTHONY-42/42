@@ -1,4 +1,0 @@
-
-
-// STRUCTUR
-t_stack

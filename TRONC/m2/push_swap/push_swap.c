@@ -1,22 +1,32 @@
-#include <unistd.h>
+#include "push_swap.h"
 
-t_stack	push_swap(int ac, char **av, t_stack *stack_a, t_stack *stack_b)
+int	is_sorted(t_stack *stack_a)
 {
-	if (!parsing(ac, av))
-		return (0);
+	t_node	*current;
 
-	if (ac < 1 || ac > 500)
-		return (printf("erreur : ac"), 1);
-	
-	else if (ac >= 2 && ac <= 3)
-		return ((sort_3(stack_a)), 0);
+	current = stack_a->start;
+	while (current->next)
+	{
+		if (current->value > current->next->value)
+			return (0);
+		current = current->next;
+	}
+	return (1);
+}
 
-	else if (ac >= 4 && ac <= 5)
-		return (sort_4_5(stack_a, stack_b), 0);
-	
-	else if (ac > 5 && ac <= 100)
-		return (sort_100(stack_a, stack_b), 0);
+void	push_swap(t_stack *stack_a, t_stack *stack_b)
+{
+	int	size;
 
-	else if (ac > 100 && ac <= 500)
-		return (sort_500(stack_a, stack_b));
+	size = stack_a->size;
+	if (is_sorted(stack_a))
+	{
+		printf("is_sorted");
+		exit(1);
+	}
+	else if (size > 1 && size <= 5)
+		sort_5(stack_a, stack_b);
+
+	else if (size > 5 && size <= 100)
+		radix_sort(stack_a, stack_b);
 }
