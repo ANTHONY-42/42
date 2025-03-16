@@ -63,10 +63,7 @@ int	check_arg(char **tab)
 		if (check_number(tab, tab[i], i))
 			i++;
 		else
-		{
-			printf("error check_arg: av[%d] (%s)", i, tab[i]);
-			exit(1);
-		}
+			error();
 	}
 	return (1);
 }

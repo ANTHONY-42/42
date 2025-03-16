@@ -48,7 +48,6 @@ t_stack	*create_stack_a(char **av);
 t_stack	*create_stack_b(void);
 t_node	*create_node(int value);
 void	add_node(t_stack *stack, t_node *new_node);
-void	free_stack(t_stack *stack);
 
 //----------------------------------------------------------------------
 //	PUSH_SWAP
@@ -67,6 +66,13 @@ int	min(t_stack *stack);
 void	radix_sort(t_stack *stack_a, t_stack *stack_b);
 void	index_stack(t_stack *stack);
 int	count_bits(int size);
+
+//	K_SORT
+void    k_sort(t_stack *stack_a, t_stack *stack_b);
+void    pb_min(t_stack *stack_a, t_stack *stack_b);
+void    pa_max(t_stack *stack_a, t_stack *stack_b);
+int     pos_max(t_stack *stack_a, int max);
+int    define_tolerance(t_stack *stack_a);
 
 //----------------------------------------------------------------------
 //	OPERATION
@@ -101,5 +107,13 @@ long	ft_atol(const char *str);
 int	ft_atoi(const char *str);
 void	print_stack(t_stack *stack);
 int	ft_strlen(char *str);
+
+//----------------------------------------------------------------------
+//	FREE
+//----------------------------------------------------------------------
+
+void free_full(t_stack **stack_a, t_stack **stack_b);
+void    free_stack(t_stack **stack);
+void    free_tab(char **tab);
 
 #endif

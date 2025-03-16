@@ -9,6 +9,8 @@ int	main(int ac, char **av)
 	stack_b = NULL;
 	parsing(ac, av, &stack_a, &stack_b);
 	push_swap(stack_a, stack_b);
-	print_stack(stack_a);
+//	print_stack(stack_a);
+	free_full(&stack_a, &stack_b);
+	system("leaks a.out");
 	return (0);
 }

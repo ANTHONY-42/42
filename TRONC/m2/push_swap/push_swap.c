@@ -26,7 +26,6 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 	}
 	else if (size > 1 && size <= 5)
 		sort_5(stack_a, stack_b);
-
-	else if (size > 5 && size <= 100)
-		radix_sort(stack_a, stack_b);
+	else
+		k_sort(stack_a, stack_b);
 }

@@ -1,21 +1,25 @@
 #include "push_swap.h"
 
-void	free_stack(t_stack *stack)
+void    index_stack(t_stack *stack)
 {
-	t_node	*current;
-	t_node	*tmp;
+        int     index;
+        t_node  *current;
+        t_node  *cmp;
 
-	if (stack)
-	{
-		current = stack->start;
-		while (current)
-		{
-			tmp = current->next;
-			free (current);
-			current = tmp;
-		}
-		free (stack);
-	}
+        current = stack->start;
+        while (current)
+        {
+                index = 0;
+                cmp = stack->start;
+                while (cmp)
+                {
+                        if (current->value > cmp->value)
+                                index++;
+                        cmp = cmp->next;
+                }
+                current->index = index;
+                current = current->next;
+        }
 }
 
 void	add_node(t_stack *stack, t_node *new_node)
@@ -40,7 +44,7 @@ t_node	*create_node(int value)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		return (NULL);
+		error();
 	node->value = value;
 	node->next = NULL;
 	return (node);
@@ -52,7 +56,7 @@ t_stack	*create_stack_b(void)
 
 	stack_b = malloc(sizeof(t_stack));
 	if (!stack_b)
-		return (NULL);
+		error();
 	stack_b->start = NULL;
 	stack_b->size = 0;
 	return (stack_b);
@@ -68,7 +72,7 @@ t_stack	*create_stack_a(char **tab)
 	i = 0;
 	stack_a = malloc(sizeof(t_stack));
 	if (!stack_a)
-		return (NULL);
+		error();
 	stack_a->start = NULL;
 	stack_a->size = 0;
 	while (tab[i])
@@ -76,13 +80,10 @@ t_stack	*create_stack_a(char **tab)
 		value = ft_atoi(tab[i]);
 		new_node = create_node(value);
 		if (!new_node)
-		{
-			printf("error : create_node tab[%d] (%s)", i, tab[i]);
-			free_stack(stack_a);
-			exit(1);
-		}
+			error();
 		add_node(stack_a, new_node);
 		i++;
 	}
+	index_stack(stack_a);
 	return (stack_a);
 }
