@@ -44,19 +44,18 @@ t_node	*create_node(int value)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		error();
+		return (NULL);
 	node->value = value;
 	node->next = NULL;
 	return (node);
 }
 
-t_stack	*create_stack_b(void)
+t_stack	*create_stack_b()
 {
 	t_stack	*stack_b;
-
 	stack_b = malloc(sizeof(t_stack));
 	if (!stack_b)
-		error();
+		return (NULL);
 	stack_b->start = NULL;
 	stack_b->size = 0;
 	return (stack_b);
@@ -66,13 +65,13 @@ t_stack	*create_stack_a(char **tab)
 {
 	int		i;
 	int		value;
-	t_node	*new_node;
 	t_stack	*stack_a;
+	t_node	*new_node;
 
 	i = 0;
 	stack_a = malloc(sizeof(t_stack));
 	if (!stack_a)
-		error();
+		return (NULL);
 	stack_a->start = NULL;
 	stack_a->size = 0;
 	while (tab[i])
@@ -80,7 +79,7 @@ t_stack	*create_stack_a(char **tab)
 		value = ft_atoi(tab[i]);
 		new_node = create_node(value);
 		if (!new_node)
-			error();
+			return (NULL);
 		add_node(stack_a, new_node);
 		i++;
 	}

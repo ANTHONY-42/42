@@ -53,7 +53,7 @@ int	check_number(char **tab, char *arg, int i)
 	return (1);
 }
 
-int	check_arg(char **tab)
+void	check_arg(char **tab, int split)
 {
 	int	i;
 
@@ -63,7 +63,11 @@ int	check_arg(char **tab)
 		if (check_number(tab, tab[i], i))
 			i++;
 		else
-			error();
+		{
+			if (split)
+				error(NULL, NULL, tab);
+			else
+				error(NULL, NULL, NULL);
+		}
 	}
-	return (1);
 }

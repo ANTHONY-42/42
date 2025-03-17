@@ -27,10 +27,10 @@ typedef struct	s_stack
 
 //	PARSING
 void	parsing(int ac, char **av, t_stack **stack_a, t_stack **stack_b);
-int	check_arg(char **tab);
+void	error(t_stack **stack_a, t_stack **stack_b, char **tab);
 
 // 	CHECK_ARG
-int	check_arg(char **tab);
+void	check_arg(char **tab, int split);
 int	check_number(char **tab, char *arg, int i);
 int	is_number(char *str);
 int	is_int(char *str);
@@ -44,7 +44,7 @@ int	count_letter(char *str);
 int	is_sep(char c);
 
 //	CREATE_STACK
-t_stack	*create_stack_a(char **av);
+t_stack *create_stack_a(char **tab);
 t_stack	*create_stack_b(void);
 t_node	*create_node(int value);
 void	add_node(t_stack *stack, t_node *new_node);
@@ -112,7 +112,7 @@ int	ft_strlen(char *str);
 //	FREE
 //----------------------------------------------------------------------
 
-void free_full(t_stack **stack_a, t_stack **stack_b);
+void	free_full(t_stack **stack_a, t_stack **stack_b, char **tab);
 void    free_stack(t_stack **stack);
 void    free_tab(char **tab);
 
