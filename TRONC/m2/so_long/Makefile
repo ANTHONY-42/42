@@ -5,7 +5,7 @@ NAME = so_long
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = inc
-MLX_DIR = minilibx
+MLX_DIR = mlx_linux
 
 # Fichiers
 SRCS = $(wildcard $(SRC_DIR)/*.c)
@@ -23,12 +23,12 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C $(MLX_DIR)  # Compile MiniLibX
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS)
+	@$(CC) $(CFLAGS) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) $(LIBS)
 	@echo "Compilation réussie de $(NAME) !"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)
