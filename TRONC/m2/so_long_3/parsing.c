@@ -62,6 +62,7 @@ void	parsing(int ac, char **av)
 {
 	int	i;
 	char	*str;
+	char	*line;
 
 	i = 0;
 	str = av[1];
@@ -69,5 +70,38 @@ void	parsing(int ac, char **av)
 		ft_putstr("Error\0");
 	if (!ft_strnstr(str, ".ber", ft_strlen(str)))
 		ft_putstr("Error\0");
+
+	tab = init_tab(fd);
+	parsing_map(tab);
+
+	line = get_next_line(fd);
+	if (!line)
+		ft_putstr("Error\0");
+		
+	while (line)
+	{
+        line = get_next_line(fd);
+        if (!line)
+                ft_putstr("Error\0");
+
+        while (line)
+        {
+                tab[nb_line] = ft_strdup(line);
+                line = get_next_line(fd);
+                nb_line++;
+        }
+        if (nb_line < 3)
+                ft_putstr("Error\0");
+
+
+		tab[nb_line] = ft_strdup(line);
+		line = get_next_line(fd);
+		nb_line++;
+	}
+	if (nb_line < 3)
+		ft_putstr("Error\0");
+
+	check_map(tab);
+
 
 }
