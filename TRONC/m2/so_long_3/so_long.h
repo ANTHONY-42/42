@@ -1,11 +1,25 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include"libft/libft.h"
-#include <unistd.h>
-#include <stdio.h>
+# include"libft/libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
-// int    check_name(char *str);
-// void    parsing(char *str);
+# define BUFFER_SIZE 42
 
-#endif
+typedef	struct	s_map
+{
+	char	**tab;
+}		t_map;
+
+ //		SO_LONG			//
+
+//	PARSING
+ int    check_name(char *str);
+void    parsing(int ac, char **av);
+
+//	FREE
+void    error();
+# endif

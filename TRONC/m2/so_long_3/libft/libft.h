@@ -6,7 +6,7 @@
 /*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:33:56 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/11/26 20:56:32 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:27:23 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
+// fomction en plus
+void    ft_putstr(char *str);
 // Prototypes des fonctions de la liste (pour la partie bonus)
 // typedef struct s_list
 // {

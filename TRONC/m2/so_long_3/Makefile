@@ -5,7 +5,8 @@ SRC_DIR  = src
 OBJ_DIR  = obj
 
 SRC_FILES = main.c \
-			parsing.c \
+	parsing.c \
+	free.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
