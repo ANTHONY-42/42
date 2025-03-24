@@ -12,75 +12,39 @@
 
 #include "so_long.h"
 
-void	parsing(int ac, char **av)
+void	load_map(int fd, t_stack *map)
 {
-	char	*str;
-	str = av[1];
-	if (!(ac == 2))
-		error();
-	if (!ft_strnstr(str, ".ber", ft_strlen(str)))
-		error();
-	else
-		printf("ok");
-	load_map()
-}
+	int	i;
+	char	*line;
+	t_map	*map;
 
-//	fd = open("av[1]", O_RDONLY);
-//	printf("%s", fd);
-
-	/*
-	//tab = init_tab(fd);
-	//parsing_map(tab);
-}
----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	i = 0;
+	map->tab = malloc(sizeof(t_map));
 	line = get_next_line(fd);
 	if (!line)
-		ft_putstr("Error\0");
-		
+		error();
 	while (line)
 	{
-        line = get_next_line(fd);
-        if (!line)
-                ft_putstr("Error\0");
-
-        while (line)
-        {
-                tab[nb_line] = ft_strdup(line);
-                line = get_next_line(fd);
-                nb_line++;
-        }
-        if (nb_line < 3)
-                ft_putstr("Error\0");
-
-
-		tab[nb_line] = ft_strdup(line);
+		map->tab[i] = ft_strdup(line);
 		line = get_next_line(fd);
-		nb_line++;
+		i++;
 	}
-	if (nb_line < 3)
-		ft_putstr("Error\0");
-
-	check_map(tab);
-
-
-}*/
+			return (map);
+}
+void	parsing(int ac, char **av, t_map *map)
+{
+	if (!(ac == 2))
+		error();
+	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
+		error();
+	
+	map = malloc(sizeof(t_map));
+	if (!map)
+		error();
+	fd = open(av[1], O_RDONLY);
+	if (!fd < 0)
+		error();
+	map->tab = load_map(fd, map);
+	check_map(map->tab);
+	return (map);
+}

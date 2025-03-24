@@ -1,45 +1,40 @@
-# Nom de l'exécutable
+CC       = gcc
+CFLAGS   = -Wall -Wextra -Werror
+
+SRC_DIR  = src
+OBJ_DIR  = obj
+
+SRC_FILES = main.c \
+	parsing.c \
+	free.c \
+
+OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+
+LIB_DIR = libft
+LIB_LIB = libft/libft.a
+
 NAME = so_long
 
-# Dossiers
-SRC_DIR = src
-OBJ_DIR = obj
-INC_DIR = inc
-MLX_DIR = mlx_linux
-
-# Fichiers
-SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
-# Compilation
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I$(MLX_DIR)
-
-# Liens MiniLibX (Linux)
-LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
-
-# Règles de compilation
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@make -C $(MLX_DIR)  # Compile MiniLibX
-	@$(CC) $(CFLAGS) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) $(LIBS)
-	@echo "Compilation réussie de $(NAME) !"
+$(NAME): $(OBJ_FILES) $(LIB_LIB)
+	$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME) $(LIB_LIB)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(LIB_LIB):
+	$(MAKE) -C $(LIB_DIR)
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@make clean -C $(MLX_DIR)
-	@echo "Objets supprimés !"
+	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIB_DIR) clean
 
 fclean: clean
-	@rm -f $(NAME)
-	@make fclean -C $(MLX_DIR)
-	@echo "Exécutable supprimé !"
+	rm -f $(NAME)
+	$(MAKE) -C $(LIB_DIR) fclean
 
 re: fclean all
-
-.PHONY: all clean fclean re

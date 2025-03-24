@@ -12,20 +12,12 @@
 
 #include "so_long.h"
 #include<stdio.h>
+
 int	main(int ac, char **av)
 {
-	parsing(ac, av);
+	t_map	*map;
+
+	map = parsing(ac, av, map)
+	if (!map)
+		error();
 }
-/*
-int	main(int ac, char **av)
-{
-	if (ac != 2)
-	{
-		ft_putstr("Error\n");
-		exit(1);
-	}
-	if (parsing(av[1]))
-		ft_putstr("Error\n");
-	so_long(av[1]);
-	return (0);
-}*/
