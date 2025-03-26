@@ -1,3 +1,4 @@
+#include "so_long.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -6,15 +7,6 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 42
 #endif
-
-int	ft_strlen(char *str)
-{
-	int	i = 0;
-
-	while(*str++)
-		i++;
-	return (i);
-}
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -25,6 +17,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 	{
 		s1 = malloc(1);
+		if (!s1)
+			return (NULL);
 		s1[0] = '\0';
 	}
 	len1 = ft_strlen(s1);

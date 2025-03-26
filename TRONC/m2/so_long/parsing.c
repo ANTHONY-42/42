@@ -25,9 +25,10 @@ t_map	*load_map(int fd)
 	line = get_next_line(fd);
 	if (!line)
 		error();
+	map->tab = malloc(sizeof(char *) * 1024);
 	while (line)
 	{
-		map->tab = malloc(sizeof(char *) * i)
+		line[ft_strlen(line) - 1] = '\0';
 		map->tab[i] = ft_strdup(line);
 		free (line);
 		line = get_next_line(fd);
@@ -47,10 +48,10 @@ t_map	*parsing(int ac, char **av)
 		error();
 	
 	fd = open(av[1], O_RDONLY);
-	if (!fd < 0)
+	if (fd < 0)
 		error();
-	map = load_map(fd, map);
-	clode(fd);
-	check_map(map->tab);
+	map = load_map(fd);
+	close(fd);
+	verif_map(map->tab, map);
 	return (map);
 }

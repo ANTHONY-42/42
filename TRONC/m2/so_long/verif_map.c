@@ -30,26 +30,27 @@ void	check_line(char *line, int ref_size, int border, t_map *map)
 		error();
 
 	x = 0;
-	while (line[x])
+	while (line[x] && line[x] != '\n')
 	{
 		if (border && line[x] != '1')
 			error();
-		else if (line[0] != '1' || line [x_size] != '1')
+		else if (!border && (line[0] != '1' || line[size - 2] != '1'))
 			error();
-		else if (i > 0 && i < size)
+
+		else if (!border && (x > 0 && x < size))
 		{
-			if (!(line[i] == '0' || line[i] == '1' 
-				   || line[i] == 'C' || line[i] == 'E' || line[i] 'P'))
+			if (!(line[x] == '0' || line[x] == '1' 
+				   || line[x] == 'C' || line[x] == 'E' || line[x] == 'P'))
 				error();
 			else
-				increment_tiles(line[i], map);
+				increment_tiles(line[x], map);
 		}
-		i++;
+		x++;
 	}
 }
 
 
-void	check_map(char **tab, t_map *map)
+void	verif_map(char **tab, t_map *map)
 {
 	int	x;
 	int	y;
@@ -59,14 +60,14 @@ void	check_map(char **tab, t_map *map)
 
 	y = 0;
 	x = 0;
-	ref_line = ft_strlen(tab[y]);
+	ref_line = ft_strlen(tab[0]);
 	ref_tab = ft_strlen_tab(tab);
 	if (ref_tab < 3)
 		error();
 	while (tab[y])
 	{
 		border = 0;
-		if (y == 0 || y == ref_tab)
+		if (y == 0 || y == (ref_tab - 1))
 			border++;
 		check_line(tab[y], ref_line, border, map);
 		y++;
