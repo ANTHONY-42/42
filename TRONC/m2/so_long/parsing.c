@@ -12,39 +12,45 @@
 
 #include "so_long.h"
 
-void	load_map(int fd, t_stack *map)
+t_map	*load_map(int fd)
 {
 	int	i;
 	char	*line;
 	t_map	*map;
 
 	i = 0;
-	map->tab = malloc(sizeof(t_map));
+	map = malloc(sizeof(t_map));
+	if (!map)
+		error();
 	line = get_next_line(fd);
 	if (!line)
 		error();
 	while (line)
 	{
+		map->tab = malloc(sizeof(char *) * i)
 		map->tab[i] = ft_strdup(line);
+		free (line);
 		line = get_next_line(fd);
 		i++;
 	}
+	map->tab[i] = NULL;
 			return (map);
 }
-void	parsing(int ac, char **av, t_map *map)
+t_map	*parsing(int ac, char **av)
 {
+	t_map	*map;
+	int	fd;
+
 	if (!(ac == 2))
 		error();
 	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
 		error();
 	
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
 	fd = open(av[1], O_RDONLY);
 	if (!fd < 0)
 		error();
-	map->tab = load_map(fd, map);
+	map = load_map(fd, map);
+	clode(fd);
 	check_map(map->tab);
 	return (map);
 }

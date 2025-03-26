@@ -22,17 +22,17 @@ void	check_tiles(t_map *map)
 
 void	check_line(char *line, int ref_size, int border, t_map *map)
 {
-	int	i;
+	int	x;
 	int	size;
 
 	size = ft_strlen(line);
 	if (size != ref_size)
 		error();
 
-	i = 0;
-	while (line[i])
+	x = 0;
+	while (line[x])
 	{
-		if (border && line[i] != '1')
+		if (border && line[x] != '1')
 			error();
 		else if (line[0] != '1' || line [x_size] != '1')
 			error();
@@ -53,22 +53,22 @@ void	check_map(char **tab, t_map *map)
 {
 	int	x;
 	int	y;
-	int	size_line;
-	int	size_tab;
+	int	ref_line;
+	int	ref_tab;
 	int	border;
 
 	y = 0;
 	x = 0;
-	size_line = ft_strlen(tab[y]);
-	size_tab = ft_strlen_tab(tab);
-	if (size_tab < 3)
+	ref_line = ft_strlen(tab[y]);
+	ref_tab = ft_strlen_tab(tab);
+	if (ref_tab < 3)
 		error();
 	while (tab[y])
 	{
 		border = 0;
-		if (y == 0 || y == size_tab)
+		if (y == 0 || y == ref_tab)
 			border++;
-		check_line(tab[y], size_line, border, map);
+		check_line(tab[y], ref_line, border, map);
 		y++;
 	}
 	check_tiles(map);
