@@ -6,7 +6,7 @@
 /*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/20 17:31:42 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:32:15 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_map	*load_map(int fd)
 	map->tab = malloc(sizeof(char *) * 1024);
 	while (line)
 	{
-		line[ft_strlen(line) - 1] = '\0';
+//		line[ft_strlen(line) - 1] = '\0';
 		map->tab[i] = ft_strdup(line);
-		free (line);
+		free(line);
 		line = get_next_line(fd);
 		i++;
 	}

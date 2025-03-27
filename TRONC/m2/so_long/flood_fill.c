@@ -1,4 +1,4 @@
-#include "../includes/solong.h"
+#include "so_long.h"
 
 static char **create_map_copy(t_map *map)
 {

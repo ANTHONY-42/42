@@ -18,6 +18,8 @@ void	check_tiles(t_map *map)
 		error();
 	else if (map->P != 1)
 		error();
+	else
+		flood_fill(map);
 }
 
 void	check_line(char *line, int ref_size, int border, t_map *map)
