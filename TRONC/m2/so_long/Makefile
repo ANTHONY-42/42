@@ -2,123 +2,53 @@
 #                                 MAKEFILE 2.0                                 #
 # **************************************************************************** #
 
-################################## SETTINGS #####################################
+NAME        = so_long
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror -g -I. -Imlx_linux -Ilibft_x
 
-NAME			= so_long.a
-TYPEFILE		= library
+# === Dossiers ===
+OBJ_DIR     = obj
+SRC_DIR     = .
+LIBFT_X_DIR = ./libft_x
+MLX_DIR     = ./mlx_linux
 
-SRCS			= main.c \
-				  parsing.c \
-				  check_map.c \
-				  flood_fill.c \
-				  get_next_line.c \
-				  utils.c \
-				  free.c \
+# === Fichiers sources ===
+SRCS        = main.c parsing.c check_map.c flood_fill.c \
+              free.c utils.c
 
-OBJS_DIR		= obj
-OBJS			= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
-BONUS_SRCS		= ft_printf_bonus.c
-BONUS_OBJS		= $(addprefix $(OBJS_DIR)/, $(BONUS_SRCS:.c=.o))
+# === Librairies ===
+LIBFT_X_A   = $(LIBFT_X_DIR)/libft_x.a
+MLX         = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-CC				= cc
-CFLAGS			= -Wall -Wextra -Werror
-AR				= ar rcs
-RM				= rm -f
+# === Règles ===
+all: $(LIBFT_X_A) $(NAME)
 
-################################## MESSAGES #####################################
+$(LIBFT_X_A):
+	@$(MAKE) -C $(LIBFT_X_DIR)
 
-BOLD			= \033[1m
-RED				= \033[31m
-GREEN			= \033[32m
-YELLOW			= \033[33m
-END				= \033[0m
-CLEAR_LINE		= \r\033[K  # Efface la ligne précédente
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_X_A) $(MLX) -o $(NAME)
+	@echo "✅ Compilation terminée : $(NAME)"
 
-SUCCESS_MSG		= \033[1m\033[32m[SUCCESS]\033[0m
-FAILURE_MSG		= \033[1m\033[31m[FAILURE]\033[0m
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Vérifie si l'option detail est activée
-DETAIL		:= $(filter detail,$(MAKECMDGOALS))
-
-################################## RULES #####################################
-
-all: $(NAME)
-
-$(NAME): $(OBJS_DIR) $(OBJS)
-	@printf "$(GREEN)%-50s$(END)\t$(SUCCESS_MSG)\n" "Generating all files / .o"
-	@printf "$(GREEN)%-50s$(END)\t$(SUCCESS_MSG)\n" "Generating libftprintf.a library..."
-	@$(AR) $(NAME) $(OBJS) || (printf "$(FAILURE_MSG)\n"; exit 1)
-
-# Création du dossier obj (uniquement en mode detail)
-$(OBJS_DIR):
-	@if [ "$(DETAIL)" = "detail" ]; then \
-		printf "$(YELLOW)%-50s$(END)\t$(SUCCESS_MSG)\n" "Creating library objs directory..."; \
-	fi
-	@mkdir -p $(OBJS_DIR) || (printf "$(FAILURE_MSG)\n"; exit 1)
-
-# Compilation des fichiers objets avec `[SUCCESS]`
-$(OBJS_DIR)/%.o: %.c | $(OBJS_DIR)
-	@tput civis
-	@if [ "$(DETAIL)" = "detail" ]; then \
-		printf "$(YELLOW)%-50s$(END)" "Generating $< / .o"; \
-	else \
-		printf "$(CLEAR_LINE)$(YELLOW)Generating $< / .o$(END)"; \
-	fi
-	@$(CC) $(CFLAGS) -c $< -o $@ || (printf "\n$(FAILURE_MSG)\n"; exit 1)
-	@sleep 0.05
-	@tput cnorm
-	@if [ "$(DETAIL)" = "detail" ]; then \
-		printf "$(CLEAR_LINE)$(YELLOW)%-50s$(END)\t$(SUCCESS_MSG)\n" "Generating $< / .o"; \
-	else \
-		printf "$(CLEAR_LINE)"; \
-	fi
-
-################################## CLEAN #####################################
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	@tput civis
-	@if [ -d "$(OBJS_DIR)" ]; then \
-		for file in $(OBJS); do \
-			if [ -f $$file ]; then \
-				if [ "$(DETAIL)" = "detail" ]; then \
-					printf "$(RED)%-50s$(END)\t$(SUCCESS_MSG)\n" "Removing $$file"; \
-				else \
-					printf "$(CLEAR_LINE)$(RED)Removing $$file$(END)"; \
-				fi; \
-				$(RM) $$file; \
-				sleep 0.05; \
-			fi; \
-		done; \
-		if [ "$(DETAIL)" != "detail" ]; then \
-			printf "$(CLEAR_LINE)$(RED)Removing library objs directory...$(END)"; \
-		fi; \
-		$(RM) -r $(OBJS_DIR); \
-		if [ "$(DETAIL)" = "detail" ]; then \
-			printf "$(RED)%-50s$(END)\t$(SUCCESS_MSG)\n" "Removing library objs directory..."; \
-		else \
-			printf "$(CLEAR_LINE)$(RED)%-50s$(END)\t$(SUCCESS_MSG)\n" "Removing library objs directory..."; \
-		fi; \
-	fi
-	@tput cnorm
+	@rm -rf $(OBJ_DIR)
+	@make clean -C $(LIBFT_X_DIR)
+	@echo "🧹 Clean terminé."
 
 fclean: clean
-	@tput civis
-	@if [ -f "$(NAME)" ]; then \
-		if [ "$(DETAIL)" = "detail" ]; then \
-			printf "$(RED)%-50s$(END)\t$(SUCCESS_MSG)\n" "Removing $(NAME)"; \
-		else \
-			printf "$(CLEAR_LINE)$(RED)Removing $(NAME)$(END)"; \
-		fi; \
-		$(RM) $(NAME); \
-		sleep 0.1; \
-	fi
-	@printf "$(CLEAR_LINE)$(RED)%-50s$(END)\t$(SUCCESS_MSG)\n" "Removing library..."
-	@tput cnorm
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFT_X_DIR)
+	@echo "🧹 Fclean terminé."
 
 re: fclean all
 
-# Empêche le message parasite "Nothing to be done for `detail`"
-detail: ;
+.PHONY: all clean fclean re
 
-.PHONY: all clean fclean re bonus detail

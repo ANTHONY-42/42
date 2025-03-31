@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_put_xmin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 17:12:29 by anturtsc         ###   ########.fr       */
+/*   Created: 2024/12/02 19:32:35 by anturtsc          #+#    #+#             */
+/*   Updated: 2024/12/03 19:14:33 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include<stdio.h>
+#include "ft_printf.h"
 
-int	main(int ac, char **av)
+int	ft_put_xmin(unsigned int nb)
 {
-	t_map	*map;
+	static int	i;
+	char		*hex;
 
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
-	parsing(map, ac, av);
-	if (!map)
-		error();
-	free(map);
-	return (0);
+	i = 0;
+	hex = "0123456789abcdef";
+	if (nb >= 16)
+	{
+		ft_put_xmin(nb / 16);
+	}
+	i++;
+	ft_put_c(hex[nb % 16]);
+	return (i);
 }

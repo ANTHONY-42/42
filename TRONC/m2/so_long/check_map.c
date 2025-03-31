@@ -29,19 +29,28 @@ void	check_line(t_map *map, char *line, int border)
 	if (size != map->size_x)
 		error();
 	if (line[0] != '1' || line[size - 2] != '1')
-			error();
+	{
+		printf("caca2");
 
+			error();
+	}
 	x = 0;
 	while (line[x] && line[x] != '\n')
 	{
 		if (border && (line[x] != '1'))
+		{
+			printf("pipi");
 			error();
+		}
 		else if (!(line[x] == '0' || line[x] == '1'))
 		{
 			if (line[x] == 'C' || line[x] == 'E' || line[x] == 'P')
 				increment_tiles(line[x], map);
 			else
+			{
+				printf("caca");
 				error();
+			}
 		}
 		x++;
 	}

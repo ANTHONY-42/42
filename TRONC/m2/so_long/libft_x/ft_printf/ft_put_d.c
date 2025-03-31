@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_put_d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 17:12:29 by anturtsc         ###   ########.fr       */
+/*   Created: 2024/11/29 12:37:57 by anturtsc          #+#    #+#             */
+/*   Updated: 2024/12/04 19:56:52 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include<stdio.h>
+#include "ft_printf.h"
 
-int	main(int ac, char **av)
+int	ft_put_d(int nbr)
 {
-	t_map	*map;
+	long	nb;
+	int		count;
 
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
-	parsing(map, ac, av);
-	if (!map)
-		error();
-	free(map);
-	return (0);
+	nb = nbr;
+	count = 0;
+	if (nb < 0)
+	{
+		count += ft_put_c('-');
+		nb = nb * (-1);
+	}
+	if (nb > 9)
+	{
+		count += ft_put_d(nb / 10);
+	}
+	count++;
+	ft_put_c((nb % 10) + '0');
+	return (count);
 }

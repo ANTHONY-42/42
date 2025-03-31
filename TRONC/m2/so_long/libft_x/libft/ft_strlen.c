@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 17:12:29 by anturtsc         ###   ########.fr       */
+/*   Created: 2024/11/20 16:47:48 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/03/31 16:37:39 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "so_long.h"
-#include<stdio.h>
-
-int	main(int ac, char **av)
+int	ft_strlen(const char *str)
 {
-	t_map	*map;
+	int	i;
 
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
-	parsing(map, ac, av);
-	if (!map)
-		error();
-	free(map);
-	return (0);
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
 }

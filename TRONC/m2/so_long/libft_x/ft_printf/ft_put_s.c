@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_put_s.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 17:12:29 by anturtsc         ###   ########.fr       */
+/*   Created: 2024/11/29 12:35:37 by anturtsc          #+#    #+#             */
+/*   Updated: 2024/12/06 14:43:09 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include<stdio.h>
+#include "ft_printf.h"
 
-int	main(int ac, char **av)
+int	ft_put_s(const char *str)
 {
-	t_map	*map;
+	int	i;
 
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
-	parsing(map, ac, av);
-	if (!map)
-		error();
-	free(map);
-	return (0);
+	i = 0;
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	return (i);
 }

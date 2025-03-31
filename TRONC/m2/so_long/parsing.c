@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/27 12:32:15 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/03/31 22:00:14 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	count_line(char *file)
 
 	count = 0;
 	fd = open(file, O_RDONLY);
+	if(fd < 0)
+		error();
 	while ((line = get_next_line(fd)))
 	{
 		count++;
@@ -39,15 +41,20 @@ void	load_map(char *file, t_map *map)
 
 	map->tab = malloc(sizeof(char *) * (count_line(file) + 1));
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error();
 	while ((line = get_next_line(fd)))
 	{
 		map->tab[i++] = ft_strdup(line);
 		free(line);
 	}
 	map->tab[i] = NULL;
-	map->y_end = ft_strlen_tab(map->tab);
-	map->x_end = ft_strlen(map->tab[0]);
 	close(fd);
+	map->P = 0;
+	map->C = 0;
+	map->E = 0;
+	map->size_y = ft_strlen_tab(map->tab);
+	map->size_x = ft_strlen(map->tab[0]);
 }
 
 void	parsing(t_map *map, int ac, char **av)

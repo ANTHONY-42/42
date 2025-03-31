@@ -12,17 +12,17 @@ void	ft_putstr(char *str)
 	}
 }
 
-int	ft_strlen(char *str)
-{
-	int	i;
+// int	ft_strlen(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	if (!str)
+// 		return (0);
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
 
 int	ft_strlen_tab(char **tab)
 {
@@ -34,31 +34,31 @@ int	ft_strlen_tab(char **tab)
 	return (i);
 }
 
-char	*ft_strdup(const char *s)
-{
-	int		i;
-	int		len;
-	char	*dest;
+// char	*ft_strdup(const char *s)
+// {
+// 	int		i;
+// 	int		len;
+// 	char	*dest;
 
-	i = 0;
-	len = 0;
-	while (s[len])
-	{
-		len++;
-	}
-	dest = malloc((len + 1) * sizeof(char));
-	if (dest == NULL)
-	{
-		return (NULL);
-	}
-	while (s[i])
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
+// 	i = 0;
+// 	len = 0;
+// 	while (s[len])
+// 	{
+// 		len++;
+// 	}
+// 	dest = malloc((len + 1) * sizeof(char));
+// 	if (dest == NULL)
+// 	{
+// 		return (NULL);
+// 	}
+// 	while (s[i])
+// 	{
+// 		dest[i] = s[i];
+// 		i++;
+// 	}
+// 	dest[i] = '\0';
+// 	return (dest);
+// }
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 {

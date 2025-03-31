@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_put_u.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 17:12:29 by anturtsc         ###   ########.fr       */
+/*   Created: 2024/11/29 17:03:41 by anturtsc          #+#    #+#             */
+/*   Updated: 2024/12/04 19:55:42 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include<stdio.h>
+#include "ft_printf.h"
 
-int	main(int ac, char **av)
+int	ft_put_u(unsigned int nb)
 {
-	t_map	*map;
+	static int	i;
 
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
-	parsing(map, ac, av);
-	if (!map)
-		error();
-	free(map);
-	return (0);
+	i = 0;
+	if (nb > 9)
+	{
+		ft_put_u(nb / 10);
+	}
+	i++;
+	ft_put_c(nb % 10 + '0');
+	return (i);
 }

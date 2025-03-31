@@ -5,6 +5,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include "libft/libft.h"
 
 # define BUFFER_SIZE 42
 
@@ -14,9 +15,9 @@ typedef	struct	s_map
 	char	**mapcopy;
 	int	size_y;
 	int	size_x;
+	int	P;
 	int	C;
 	int	E;
-	int	P;
 }		t_map;
 
  //		SO_LONG			//
@@ -45,10 +46,10 @@ char	*get_next_line(int fd);
 char	*extact_line(char **stored);
 
 //	UTILS
-int	ft_strlen(char *str);
+// int	ft_strlen(char *str);
 int	ft_strlen_tab(char **tab);
 char    *ft_strnstr(const char *str, const char *to_find, size_t n);
-char    *ft_strdup(const char *s);
+// char    *ft_strdup(const char *s);
 void	ft_putstr(char *str);
 
 //	FREE
