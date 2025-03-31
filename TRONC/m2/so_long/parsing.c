@@ -12,46 +12,54 @@
 
 #include "so_long.h"
 
-t_map	*load_map(int fd)
+int	count_line(char *file)
+{
+	int	fd;
+	int	count;
+	char	*line;
+
+	count = 0;
+	fd = open(file, O_RDONLY);
+	while ((line = get_next_line(fd)))
+	{
+		count++;
+		free(line);
+	}
+	close(fd);
+	return (count);
+}
+
+void	load_map(char *file, t_map *map)
 {
 	int	i;
+	int	fd;
 	char	*line;
-	t_map	*map;
 
 	i = 0;
-	map = malloc(sizeof(t_map));
-	if (!map)
-		error();
-	line = get_next_line(fd);
-	if (!line)
-		error();
-	map->tab = malloc(sizeof(char *) * 1024);
-	while (line)
+
+	map->tab = malloc(sizeof(char *) * (count_line(file) + 1));
+	fd = open(file, O_RDONLY);
+	while ((line = get_next_line(fd)))
 	{
-//		line[ft_strlen(line) - 1] = '\0';
-		map->tab[i] = ft_strdup(line);
+		map->tab[i++] = ft_strdup(line);
 		free(line);
-		line = get_next_line(fd);
-		i++;
 	}
 	map->tab[i] = NULL;
-			return (map);
+	map->y_end = ft_strlen_tab(map->tab);
+	map->x_end = ft_strlen(map->tab[0]);
+	close(fd);
 }
-t_map	*parsing(int ac, char **av)
-{
-	t_map	*map;
-	int	fd;
 
+void	parsing(t_map *map, int ac, char **av)
+{
 	if (!(ac == 2))
 		error();
 	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
 		error();
-	
-	fd = open(av[1], O_RDONLY);
-	if (fd < 0)
+
+	load_map(av[1], map);
+	if (!map->tab)
 		error();
-	map = load_map(fd);
-	close(fd);
-	verif_map(map->tab, map);
-	return (map);
+
+	check_map(map, map->tab);
 }

@@ -11,6 +11,9 @@
 typedef	struct	s_map
 {
 	char	**tab;
+	char	**mapcopy;
+	int	size_y;
+	int	size_x;
 	int	C;
 	int	E;
 	int	P;
@@ -19,14 +22,23 @@ typedef	struct	s_map
  //		SO_LONG			//
 
 //	PARSING
-t_map	*parsing(int ac, char **av);
-t_map	*load_map(int fd);
+void	parsing(t_map *map, int ac, char **av);
+void	load_map(char *file, t_map *map);
+int     count_line(char *file);
 
-//	VERIF_MAP
-void	verif_map(char **tab, t_map *map);
-void	check_line(char *line, int ref_size, int border, t_map *map);
+
+//	CHECK_MAP
+void	check_map(t_map *map, char **tab);
+void    check_line(t_map *map, char *line, int border);
 void	check_tiles(t_map *map);
 void	increment_tiles(char c, t_map *map);
+
+//	FLOOD_FILL
+void     flood_fill(t_map *map);
+void     verif_access(char **mapcopy, t_map *map);
+void    flood(t_map *map, char  **mapcpy, int P_y, int P_x);
+void    find_P(char **mapcopy, int *player_y, int *player_x);
+char    **ft_tabcpy(char **tab);
 
 //	GET_NEXT_LINE
 char	*get_next_line(int fd);
@@ -38,6 +50,7 @@ int	ft_strlen_tab(char **tab);
 char    *ft_strnstr(const char *str, const char *to_find, size_t n);
 char    *ft_strdup(const char *s);
 void	ft_putstr(char *str);
+
 //	FREE
 void    error();
 # endif

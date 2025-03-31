@@ -17,7 +17,7 @@ int	main(int ac, char **av)
 {
 	t_map	*map;
 
-	map = parsing(ac, av);
+	parsing(&map, ac, av);
 	if (!map)
 		error();
 }

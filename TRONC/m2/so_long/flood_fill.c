@@ -1,111 +1,94 @@
 #include "so_long.h"
 
-static char **create_map_copy(t_map *map)
+char	**ft_tabcpy(char **tab)
 {
-    char **copy;
-    int i;
-
-    copy = malloc(sizeof(char *) * (map->height + 1));
-    if (!copy)
-        return (NULL);
-    i = 0;
-    while (i < map->height)
-    {
-        copy[i] = ft_strdup(map->map[i]);
-        if (!copy[i])
-        {
-            while (--i >= 0)
-                free(copy[i]);
-            free(copy);
-            return (NULL);
-        }
-        i++;
-    }
-    copy[i] = NULL;
-    return (copy);
-}
-
-static void find_player(t_map *map, int *player_x, int *player_y)
-{
-    int i;
-    int j;
-
-    i = 0;
-    while (i < map->height)
-    {
-        j = 0;
-        while (j < map->width)
-        {
-            if (map->map[i][j] == 'P')
-            {
-                *player_x = j;
-                *player_y = i;
-                return;
-            }
-            j++;
-        }
-        i++;
-    }
-}
-
-static void fill(char **map_copy, int player_x, int player_y, t_map *map)
-{
-    if (player_x < 0 || player_x >= map->width || player_y < 0 
-	|| player_y >= map->height || map_copy[player_y][player_x] == '1' 
-	|| map_copy[player_y][player_x] == 'F' 
-	|| map_copy[player_y][player_x] == 'M')
-	return ;
-    map_copy[player_y][player_x] = 'F';
-    fill(map_copy, player_x + 1, player_y, map);
-    fill(map_copy, player_x - 1, player_y, map);
-    fill(map_copy, player_x, player_y + 1, map);
-    fill(map_copy, player_x, player_y - 1, map);
-}
-
-static int check_accessibility(char **map_copy, t_map *map)
-{
-    int i;
-    int j;
-
-    i = 0;
-    while (i < map->height)
-    {
-        j = 0;
-        while (j < map->width)
-        {
-            if ((map->map[i][j] == 'C' || map->map[i][j] == 'E') 
-                && map_copy[i][j] != 'F')
-                return (0);
-            j++;
-        }
-        i++;
-    }
-    return (1);
-}
-
-int flood_fill_check(t_map *map)
-{
-    char **map_copy;
-    int player_x;
-    int player_y;
-	int i;
+	int	i;
+	int	len;
+	char	**dst;
 
 	i = 0;
-    map_copy = create_map_copy(map);
-    if (!map_copy)
-        return (0);
-    find_player(map, &player_x, &player_y);
-    fill(map_copy, player_x, player_y, map);
-    if (!check_accessibility(map_copy, map))
+	len = ft_strlen_tab(tab);
+	dst = malloc(sizeof(char *) * (len + 1));
+	if (!dst)
+		return (NULL);
+	while (i < len)
 	{
-        ft_putendl_fd("Error: Some collectibles or exit are not accessible", 2);
-		 while (i < map->height)
-        free(map_copy[i++]);
-    	free(map_copy);
-		return (0);
-	}                                  
-    while (i < map->height)
-        free(map_copy[i++]);
-    free(map_copy);
-    return (1);
+		dst[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	dst[i] = NULL;
+	return (dst);
+}
+
+void	find_P(char **mapcopy, int *player_y, int *player_x)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (mapcopy[y])
+	{
+		x = 0;
+		while (mapcopy[y][x])
+		{
+			if (mapcopy[y][x] == 'P')
+			{
+				*player_y = y;
+				*player_x = x;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	flood(t_map *map, char	**mapcopy, int P_y, int P_x)
+{
+	if (P_x < 0 || P_x >= map->size_x 
+			|| P_y < 0 || P_y >= map->size_y 
+			|| mapcopy[P_y][P_x] == '1'
+			|| mapcopy[P_y][P_x] == 'F')
+		return ;
+	
+	mapcopy[P_y][P_x] = 'F';
+	flood(map, mapcopy, P_y + 1, P_x);
+	flood(map, mapcopy, P_y - 1, P_x);
+	flood(map, mapcopy, P_y, P_x + 1);
+	flood(map, mapcopy, P_y, P_x - 1);
+}
+
+void	check_access(char **mapcopy, t_map *map)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while(map->tab[y])
+	{
+		x = 0;
+		while (map->tab[y][x])
+		{
+			if ((map->tab[y][x] == 'C' || map->tab[y][x] == 'E')
+					&& mapcopy[y][x] != 'F')
+				error();
+			x++;
+		}
+		y++;
+	}
+}
+
+void	flood_fill(t_map *map)
+{
+	int	P_y;
+	int	P_x;
+	char 	**mapcopy;
+
+	mapcopy = ft_tabcpy(map->tab);
+	if (!mapcopy)
+		error ();
+
+	find_P(mapcopy, &P_y, &P_x);
+	flood(map, mapcopy, P_y, P_x);
+	check_access(mapcopy, map);
 }
