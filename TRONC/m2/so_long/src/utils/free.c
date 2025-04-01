@@ -1,7 +1,8 @@
 #include "so_long.h"
 
-void    error()
+void    error(char *str)
 {
-        ft_putstr("Error\0");
+        ft_putstr("Error\n");
+	ft_putstr(str);
         exit(1);
 }

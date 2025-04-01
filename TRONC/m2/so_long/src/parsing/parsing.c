@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 22:00:14 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/01 11:20:35 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	count_line(char *file)
 	count = 0;
 	fd = open(file, O_RDONLY);
 	if(fd < 0)
-		error();
+		error("!fd");
 	while ((line = get_next_line(fd)))
 	{
 		count++;
@@ -42,7 +42,7 @@ void	load_map(char *file, t_map *map)
 	map->tab = malloc(sizeof(char *) * (count_line(file) + 1));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error();
+		error("!fd\n");
 	while ((line = get_next_line(fd)))
 	{
 		map->tab[i++] = ft_strdup(line);
@@ -60,13 +60,13 @@ void	load_map(char *file, t_map *map)
 void	parsing(t_map *map, int ac, char **av)
 {
 	if (!(ac == 2))
-		error();
+		error("!ac == 2\n");
 	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
-		error();
+		error("!.ber\n");
 
 	load_map(av[1], map);
 	if (!map->tab)
-		error();
+		error("!map->tab\n");
 
 	check_map(map, map->tab);
 }

@@ -17,6 +17,7 @@ MLX_DIR     = include/mlx_linux
 
 # === Fichiers sources ===
 SRC_FILES   = main.c \
+	      init_mlx.c \
               parsing/parsing.c \
               parsing/check_map.c \
               parsing/flood_fill.c \
