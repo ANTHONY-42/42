@@ -43,33 +43,33 @@ void	find_P(char **mapcopy, int *player_y, int *player_x)
 	}
 }
 
-void	flood(t_map *map, char	**mapcopy, int P_y, int P_x)
+void	flood(t_game *game, char	**mapcopy, int P_y, int P_x)
 {
-	if (P_x < 0 || P_x >= map->size_x 
-			|| P_y < 0 || P_y >= map->size_y 
+	if (P_x < 0 || P_x >= game->size_x 
+			|| P_y < 0 || P_y >= game->size_y 
 			|| mapcopy[P_y][P_x] == '1'
 			|| mapcopy[P_y][P_x] == 'F')
 		return ;
 	
 	mapcopy[P_y][P_x] = 'F';
-	flood(map, mapcopy, P_y + 1, P_x);
-	flood(map, mapcopy, P_y - 1, P_x);
-	flood(map, mapcopy, P_y, P_x + 1);
-	flood(map, mapcopy, P_y, P_x - 1);
+	flood(game, mapcopy, P_y + 1, P_x);
+	flood(game, mapcopy, P_y - 1, P_x);
+	flood(game, mapcopy, P_y, P_x + 1);
+	flood(game, mapcopy, P_y, P_x - 1);
 }
 
-void	check_access(char **mapcopy, t_map *map)
+void	check_access(char **mapcopy, t_game *game)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while(map->tab[y])
+	while(game->map[y])
 	{
 		x = 0;
-		while (map->tab[y][x])
+		while (game->map[y][x])
 		{
-			if ((map->tab[y][x] == 'C' || map->tab[y][x] == 'E')
+			if ((game->map[y][x] == 'C' || game->map[y][x] == 'E')
 					&& mapcopy[y][x] != 'F')
 				error();
 			x++;
@@ -78,17 +78,17 @@ void	check_access(char **mapcopy, t_map *map)
 	}
 }
 
-void	flood_fill(t_map *map)
+void	flood_fill(t_game *game)
 {
 	int	P_y;
 	int	P_x;
 	char 	**mapcopy;
 
-	mapcopy = ft_tabcpy(map->tab);
+	mapcopy = ft_tabcpy(game->map);
 	if (!mapcopy)
 		error ();
 
 	find_P(mapcopy, &P_y, &P_x);
-	flood(map, mapcopy, P_y, P_x);
-	check_access(mapcopy, map);
+	flood(game, mapcopy, P_y, P_x);
+	check_access(mapcopy, game);
 }

@@ -1,0 +1,487 @@
+#include "so_long.h"
+#define TILE 32
+
+void	draw_tile(t_game *game, void *img, int x, int y)
+{
+	mlx_put_image_to_window(game->mlx, game->win, img, x * TILE, y * TILE);
+}
+
+void	render_map(t_game *game)
+{
+	int	y;
+	int	x;
+	char 	c;
+
+	y = 0;
+	while (y < game->size_y)
+	{
+		x = 0;
+		while (x < game->size_x)
+		{
+			c = game->map[y][x];
+			if (c == '0')
+				draw_tile(game, game->img_floor, x, y);
+			else if (c == '1')\
+				draw_tile(game, game->img_wall, x, y);
+			else if (c == 'P')
+				draw_tile(game, game->img_player_d, x, y);
+			else if (c == 'C')
+				draw_tile(game, game->img_collectible, x, y);
+			else if (c == 'E')
+				draw_tile(game, game->img_exit, x, y);
+			x++;
+		}
+		y++;
+	}
+}
+void	init_textures(t_game *game)
+{
+	int	w;
+	int	h;
+
+	game->img_player_h = mlx_xpm_file_to_image(game->mlx, "textures/player_h.xpm", &w, &h);
+	game->img_player_b = mlx_xpm_file_to_image(game->mlx, "textures/player_b.xpm", &w, &h);
+	game->img_player_g = mlx_xpm_file_to_image(game->mlx, "textures/player_g.xpm", &w, &h);
+	game->img_player_d = mlx_xpm_file_to_image(game->mlx, "textures/player_d.xpm", &w, &h);
+	game->img_floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &w, &h);
+	game->img_wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &w, &h);
+	game->img_collectible = mlx_xpm_file_to_image(game->mlx, "textures/collectible.xpm", &w, &h);
+	game->img_exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &w, &h);
+}
+
+void	init_mlx(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		error("!mlx_init\n");
+	game->win = mlx_new_window(game->mlx, 400, 300, "Fentre MLX");
+	if (!game->win)
+		error("!mlx_new_windows");
+	init_textures(game);
+	render_map(game);
+	mlx_loop(game->mlx);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/04/01 18:29:08 by anturtsc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+int	main(int ac, char **av)
+{
+	t_game	*game;
+
+	game = malloc(sizeof(t_game));
+	if (!game)
+		error();
+	parsing(game, ac, av);
+	if (!game)
+		error();
+	init_mlx(game);	
+	free(game);
+	return (0);
+}
+#include "so_long.h"
+
+void	check_tiles(t_game *game)
+{
+	if (game->C < 1)
+		error("!game->C < 1\n");
+	else if (game->E != 1)
+		error("!game->E != 1\n");
+	else if (game->P != 1)
+		error("!game->P != 1\n");
+}
+
+void	increment_tiles(char c, t_game *game)
+{
+	if (c == 'C')
+		game->C++;
+	else if (c == 'E')
+		game->E++;
+	else if (c == 'P')
+		game->P++; 
+}
+
+void	check_line(t_game *game, char *line, int border)
+{
+	int	x;
+	int	size;
+
+	size = ft_strlen(line); 
+	if (size != game->size_x)
+		error("!size != game->size_x\n");
+	if (line[0] != '1' || line[size - 2] != '1')
+			error("!border != '1'\n");
+	x = 0;
+	while (line[x] && line[x] != '\n')
+	{
+		if (border && (line[x] != '1'))
+			error("!border != '1'\n");
+		else if (!(line[x] == '0' || line[x] == '1'))
+		{
+			if (line[x] == 'C' || line[x] == 'E' || line[x] == 'P')
+				increment_tiles(line[x], game);
+			else
+				error("!line[x] != '?'\n");
+		}
+		x++;
+	}
+}
+
+void	check_map(t_game *game, char **tab)
+{
+	int	y;
+	int	border;
+
+	y = 0;
+	if (game->size_y < 3)
+		error("!game->size_y < 3\n");
+	while (tab[y])
+	{
+		border = 0;
+		if (y == 0 || y == (game->size_y - 1))
+			border++;
+		check_line(game, tab[y], border);
+		y++;
+	}
+	check_tiles(game);
+	flood_fill(game);
+}
+
+#include "so_long.h"
+
+char	**ft_tabcpy(char **tab)
+{
+	int	i;
+	int	len;
+	char	**dst;
+
+	i = 0;
+	len = ft_strlen_tab(tab);
+	dst = malloc(sizeof(char *) * (len + 1));
+	if (!dst)
+		return (NULL);
+	while (i < len)
+	{
+		dst[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	dst[i] = NULL;
+	return (dst);
+}
+
+void	find_P(char **mapcopy, int *player_y, int *player_x)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (mapcopy[y])
+	{
+		x = 0;
+		while (mapcopy[y][x])
+		{
+			if (mapcopy[y][x] == 'P')
+			{
+				*player_y = y;
+				*player_x = x;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	flood(t_game *game, char	**mapcopy, int P_y, int P_x)
+{
+	if (P_x < 0 || P_x >= game->size_x 
+			|| P_y < 0 || P_y >= game->size_y 
+			|| mapcopy[P_y][P_x] == '1'
+			|| mapcopy[P_y][P_x] == 'F')
+		return ;
+	
+	mapcopy[P_y][P_x] = 'F';
+	flood(game, mapcopy, P_y + 1, P_x);
+	flood(game, mapcopy, P_y - 1, P_x);
+	flood(game, mapcopy, P_y, P_x + 1);
+	flood(game, mapcopy, P_y, P_x - 1);
+}
+
+void	check_access(char **mapcopy, t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while(game->map[y])
+	{
+		x = 0;
+		while (game->map[y][x])
+		{
+			if ((game->map[y][x] == 'C' || game->map[y][x] == 'E')
+					&& mapcopy[y][x] != 'F')
+				error();
+			x++;
+		}
+		y++;
+	}
+}
+
+void	flood_fill(t_game *game)
+{
+	int	P_y;
+	int	P_x;
+	char 	**mapcopy;
+
+	mapcopy = ft_tabcpy(game->map);
+	if (!mapcopy)
+		error ();
+
+	find_P(mapcopy, &P_y, &P_x);
+	flood(game, mapcopy, P_y, P_x);
+	check_access(mapcopy, game);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/04/01 18:45:29 by anturtsc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+int	count_line(char *file)
+{
+	int	fd;
+	int	count;
+	char	*line;
+
+	count = 0;
+	fd = open(file, O_RDONLY);
+	if(fd < 0)
+		error("!fd");
+	while ((line = get_next_line(fd)))
+	{
+		count++;
+		free(line);
+	}
+	close(fd);
+	return (count);
+}
+
+void	load_map(char *file, t_game *game)
+{
+	int	i;
+	int	fd;
+	char	*line;
+
+	i = 0;
+
+	game->map = malloc(sizeof(char *) * (count_line(file) + 1));
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error("!fd\n");
+	while ((line = get_next_line(fd)))
+	{
+		game->map[i++] = ft_strdup(line);
+		free(line);
+	}
+	game->map[i] = NULL;
+	close(fd);
+	game->P = 0;
+	game->C = 0;
+	game->E = 0;
+	game->size_y = ft_strlen_tab(game->map);
+	game->size_x = ft_strlen(game->map[0]);
+}
+
+void	parsing(t_game *game, int ac, char **av)
+{
+	if (!(ac == 2))
+		error("!ac == 2\n");
+	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
+		error("!.ber\n");
+
+	load_map(av[1], game);
+	if (!game->map)
+		error("!map->tab\n");
+
+	check_map(game, game->map);
+}
+
+#include "so_long.h"
+
+void    error(char *str)
+{
+        ft_putstr("Error\n");
+	ft_putstr(str);
+        exit(1);
+}
+#include "so_long.h"
+
+void	ft_putstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
+
+// int	ft_strlen(char *str)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (!str)
+// 		return (0);
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
+
+int	ft_strlen_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+// char	*ft_strdup(const char *s)
+// {
+// 	int		i;
+// 	int		len;
+// 	char	*dest;
+
+// 	i = 0;
+// 	len = 0;
+// 	while (s[len])
+// 	{
+// 		len++;
+// 	}
+// 	dest = malloc((len + 1) * sizeof(char));
+// 	if (dest == NULL)
+// 	{
+// 		return (NULL);
+// 	}
+// 	while (s[i])
+// 	{
+// 		dest[i] = s[i];
+// 		i++;
+// 	}
+// 	dest[i] = '\0';
+// 	return (dest);
+// }
+
+char	*ft_strnstr(const char *str, const char *to_find, size_t n)
+{
+	size_t	i;
+	size_t	j;
+
+	if (*to_find == '\0')
+	{
+		return ((char *)str);
+	}
+	i = 0;
+	while (i < n && str[i])
+	{
+		j = 0;
+		while ((i + j) < n && str[i + j] == to_find[j])
+		{
+			if (to_find[j + 1] == '\0')
+			{
+				return ((char *)&str[i]);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+#ifndef SO_LONG_H
+# define SO_LONG_H
+
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include "mlx.h"
+# include "libft/libft.h"
+
+# define BUFFER_SIZE 42
+
+typedef struct	s_game
+{
+	char	**map;
+	char	**mapcopy;
+	int	size_y;
+	int	size_x;
+	int	P;
+	int	C;
+	int	E;
+	void	*mlx;
+	void	*win;
+	void	*img_player_h;
+	void	*img_player_b;
+	void	*img_player_g;
+	void	*img_player_d;
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_collectible;
+	void	*img_exit;
+}	t_game;
+ //		SO_LONG			//
+
+//	PARSING
+void	parsing(t_game *game, int ac, char **av);
+void	load_map(char *file, t_game *game);
+int     count_line(char *file);
+//	CHECK_MAP
+void	check_map(t_game *game, char **tab);
+void    check_line(t_game *game, char *line, int border);
+void	check_tiles(t_game *game);
+void	increment_tiles(char c, t_game *game);
+//	FLOOD_FILL
+void     flood_fill(t_game *game);
+void     verif_access(char **mapcopy, t_game *game);
+void    flood(t_game *game, char  **mapcpy, int P_y, int P_x);
+void    find_P(char **mapcopy, int *player_y, int *player_x);
+char    **ft_tabcpy(char **tab);
+//	GET_NEXT_LINE
+char	*get_next_line(int fd);
+char	*extract_line(char **stored);
+
+//	MLX
+void    init_mlx(t_game *game);
+
+
+//	UTILS
+int	ft_strlen_tab(char **tab);
+char    *ft_strnstr(const char *str, const char *to_find, size_t n);
+void	ft_putstr(char *str);
+
+//	FREE
+void    error();
+# endif
