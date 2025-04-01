@@ -56,7 +56,6 @@ void	check_line(t_map *map, char *line, int border)
 	}
 }
 
-
 void	check_map(t_map *map, char **tab)
 {
 	int	y;

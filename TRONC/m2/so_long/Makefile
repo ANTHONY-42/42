@@ -1,22 +1,30 @@
 # **************************************************************************** #
-#                                 MAKEFILE 2.0                                 #
+#                                 MAKEFILE 2.1                                 #
 # **************************************************************************** #
 
 NAME        = so_long
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -g -I. -Imlx_linux -Ilibft_x
+CFLAGS      = -Wall -Wextra -Werror -g \
+              -Iinclude \
+              -Iinclude/libft_x \
+              -Iinclude/mlx_linux
 
 # === Dossiers ===
 OBJ_DIR     = obj
-SRC_DIR     = .
-LIBFT_X_DIR = ./libft_x
-MLX_DIR     = ./mlx_linux
+SRC_DIR     = src
+LIBFT_X_DIR = include/libft_x
+MLX_DIR     = include/mlx_linux
 
 # === Fichiers sources ===
-SRCS        = main.c parsing.c check_map.c flood_fill.c \
-              free.c utils.c
+SRC_FILES   = main.c \
+              parsing/parsing.c \
+              parsing/check_map.c \
+              parsing/flood_fill.c \
+              utils/free.c \
+              utils/utils.c
 
-OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # === Librairies ===
 LIBFT_X_A   = $(LIBFT_X_DIR)/libft_x.a
@@ -32,11 +40,10 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_X_A) $(MLX) -o $(NAME)
 	@echo "✅ Compilation terminée : $(NAME)"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+# Compile .c to .o, crée les dossiers obj/ nécessaires
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
