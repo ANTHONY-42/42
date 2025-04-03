@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 	parsing(game, ac, av);
 	if (!game)
 		error("!game");
-	init_mlx(game);	
+	start_window(game);	
 	free(game);
 	return (0);
 }

@@ -19,12 +19,17 @@ typedef struct	s_game
 	int	P;
 	int	C;
 	int	E;
+	int	P_y;
+	int	P_x;
+	int	moves;
+	int	C_collected;
 	void	*mlx;
 	void	*win;
 	void	*img_player_h;
 	void	*img_player_b;
 	void	*img_player_g;
 	void	*img_player_d;
+	void	*img_player;
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_collectible;
@@ -51,9 +56,19 @@ char    **ft_tabcpy(char **tab);
 char	*get_next_line(int fd);
 char	*extract_line(char **stored);
 
-//	MLX
-void    init_mlx(t_game *game);
+//	PLAY
+//	START_WINDOW
+void    start_window(t_game *game);
+void init_textures(t_game *game);
+void    render_map(t_game *game);
+void    draw_tile(t_game *game, void *img, int x, int y);
 
+//	MOVE
+void    move_player(t_game *game, int y, int x);
+int     handle_keypress(int keycode, t_game *game);
+void    new_player(t_game *game, int new_y, int new_x);
+void    change_sprite(t_game *game, int y, int x);
+void exit_game(t_game *game);
 
 //	UTILS
 void    error(char *str);

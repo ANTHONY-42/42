@@ -17,10 +17,11 @@ MLX_DIR     = include/minilibx_opengl
 
 # === Fichiers sources ===
 SRC_FILES   = main.c \
-              init_mlx.c \
               parsing/parsing.c \
               parsing/check_map.c \
               parsing/flood_fill.c \
+	      play/start_window.c \
+	      play/mouv.c \
               utils/free.c \
               utils/utils.c
 

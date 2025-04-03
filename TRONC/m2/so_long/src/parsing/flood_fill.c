@@ -91,4 +91,6 @@ void	flood_fill(t_game *game)
 	find_P(mapcopy, &P_y, &P_x);
 	flood(game, mapcopy, P_y, P_x);
 	check_access(mapcopy, game);
+	game->P_y = P_y;
+	game->P_x = P_x;
 }
