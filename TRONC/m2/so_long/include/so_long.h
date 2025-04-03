@@ -56,10 +56,8 @@ void    init_mlx(t_game *game);
 
 
 //	UTILS
+void    error(char *str);
 int	ft_strlen_tab(char **tab);
 char    *ft_strnstr(const char *str, const char *to_find, size_t n);
 void	ft_putstr(char *str);
-
-//	FREE
-void    error();
 # endif

@@ -71,7 +71,7 @@ void	check_access(char **mapcopy, t_game *game)
 		{
 			if ((game->map[y][x] == 'C' || game->map[y][x] == 'E')
 					&& mapcopy[y][x] != 'F')
-				error();
+				error("!access C || E");
 			x++;
 		}
 		y++;
@@ -86,7 +86,7 @@ void	flood_fill(t_game *game)
 
 	mapcopy = ft_tabcpy(game->map);
 	if (!mapcopy)
-		error ();
+		error ("!mapcopy");
 
 	find_P(mapcopy, &P_y, &P_x);
 	flood(game, mapcopy, P_y, P_x);

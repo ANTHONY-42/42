@@ -18,10 +18,10 @@ int	main(int ac, char **av)
 
 	game = malloc(sizeof(t_game));
 	if (!game)
-		error();
+		error("!game");
 	parsing(game, ac, av);
 	if (!game)
-		error();
+		error("!game");
 	init_mlx(game);	
 	free(game);
 	return (0);
