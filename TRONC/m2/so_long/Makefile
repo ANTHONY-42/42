@@ -2,68 +2,69 @@
 #                                 MAKEFILE 2.1                                 #
 # **************************************************************************** #
 
-NAME        = so_long
-CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -g \
-              -Iinclude \
-              -Iinclude/libft_x \
-              -Iinclude/minilibx_opengl
+# **************************************************************************** #
+#                                 MAKEFILE                                     #
+# **************************************************************************** #
 
-# === Dossiers ===
-SRC_DIR     = src
-OBJ_DIR     = obj
-LIBFT_X_DIR = include/libft_x
-MLX_DIR     = include/minilibx_opengl
+NAME		= so_long
 
-# === Fichiers sources ===
-SRC_FILES   = main.c \
-              parsing/parsing.c \
-              parsing/check_map.c \
-              parsing/flood_fill.c \
-	      play/start_window.c \
-	      play/mouv.c \
-              utils/free.c \
-              utils/utils.c
+# Directories
+SRC_DIR		= src
+OBJ_DIR		= obj
+INC_DIR		= include
+LIBFT_DIR	= $(INC_DIR)/libft_x
+MLX_DIR		= $(INC_DIR)/minilibx-linux
 
-SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# Compiler and Flags
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+MLX_FLAGS	= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-# === Librairies ===
-LIBFT_X_A   = $(LIBFT_X_DIR)/libft_x.a
-MLX_A       = $(MLX_DIR)/libmlx.a
+# Sources
+SRCS		= $(shell find $(SRC_DIR) -name '*.c')
+OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-# === Liens dynamiques ===
-MLX         = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+# Libs
+LIBFT		= $(LIBFT_DIR)/libft_x.a
+MLX_LIB		= $(MLX_DIR)/libmlx.a
 
-# === Règles ===
-all: $(MLX_A) $(LIBFT_X_A) $(NAME)
+# Colors
+GREEN		= \033[0;32m
+RESET		= \033[0m
 
-$(LIBFT_X_A):
-	@$(MAKE) -C $(LIBFT_X_DIR)
+# ==============================================================================
+#                                    RULES
+# ==============================================================================
 
-$(MLX_A):
-	@$(MAKE) -C $(MLX_DIR)
+all: $(NAME)
 
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_X_A) $(MLX) -o $(NAME)
-	@echo "✅ Compilation terminée : $(NAME)"
+$(NAME): $(MLX_LIB) $(LIBFT) $(OBJS)
+	@echo "$(GREEN)Linking $@...$(RESET)"
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $@
 
-# Compile .c to .o, crée les dossiers obj/ nécessaires
+# Object compilation rule
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(MLX_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Build libft
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
+
+# Build MiniLibX Linux
+$(MLX_LIB):
+	@$(MAKE) -C $(MLX_DIR)
+
+# Cleaning
 clean:
+	@$(MAKE) -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJ_DIR)
-	@$(MAKE) clean -C $(LIBFT_X_DIR)
-	@$(MAKE) clean -C $(MLX_DIR)
-	@echo "🧹 Clean terminé."
 
 fclean: clean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@rm -f $(NAME)
-	@$(MAKE) fclean -C $(LIBFT_X_DIR)
-	@echo "🧹 Fclean terminé."
 
 re: fclean all
 
 .PHONY: all clean fclean re
+

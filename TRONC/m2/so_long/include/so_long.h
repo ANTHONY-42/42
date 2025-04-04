@@ -16,11 +16,11 @@ typedef struct	s_game
 	char	**mapcopy;
 	int	size_y;
 	int	size_x;
+	int	P_y;
+	int	P_x;
 	int	P;
 	int	C;
 	int	E;
-	int	P_y;
-	int	P_x;
 	int	moves;
 	int	C_collected;
 	void	*mlx;
@@ -32,7 +32,7 @@ typedef struct	s_game
 	void	*img_player;
 	void	*img_wall;
 	void	*img_floor;
-	void	*img_collectible;
+	void	*img_collect;
 	void	*img_exit;
 }	t_game;
  //		SO_LONG			//
@@ -60,7 +60,7 @@ char	*extract_line(char **stored);
 //	START_WINDOW
 void    start_window(t_game *game);
 void init_textures(t_game *game);
-void    render_map(t_game *game);
+void init_map(t_game *game);
 void    draw_tile(t_game *game, void *img, int x, int y);
 
 //	MOVE
@@ -75,4 +75,5 @@ void    error(char *str);
 int	ft_strlen_tab(char **tab);
 char    *ft_strnstr(const char *str, const char *to_find, size_t n);
 void	ft_putstr(char *str);
+int	close_game(t_game *game);
 # endif

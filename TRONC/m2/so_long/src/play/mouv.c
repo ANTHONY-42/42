@@ -1,14 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouv.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/04 15:29:46 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/04/04 20:49:21 by anturtsc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	exit_game(t_game *game)
 {
 	if (game)
-	{
-		// Libère la mémoire, ferme la fenêtre, etc.
-		// Exemple :
 		mlx_destroy_window(game->mlx, game->win);
-		// (tu peux aussi free les textures si besoin)
-	}
 	exit(0);
 }
 
@@ -29,15 +36,14 @@ void	new_player(t_game *game, int new_y, int new_x)
 	game->P_y = new_y;
 	game->P_x = new_x;
 	game->moves++;
-	game->map[new_y][new_x] = 'P'; // place le joueur à la nouvelle position
-	render_map(game);
+	game->map[new_y][new_x] = 'P';
+	init_map(game);
 }
-
 
 void	move_player(t_game *game, int y, int x)
 {
-	int	new_y;
-	int	new_x;
+	int		new_y;
+	int		new_x;
 	char	next_tile;
 
 	new_y = game->P_y + y;
@@ -58,21 +64,21 @@ void	move_player(t_game *game, int y, int x)
 		else
 			return ;
 	}
-	game->map[game->P_y][game->P_x] = '0'; // vide l’ancienne position
+	game->map[game->P_y][game->P_x] = '0';
 	new_player(game, new_y, new_x);
 }
 
 int	handle_keypress(int keycode, t_game *game)
 {
-	if (keycode == 53)
+	if (keycode == 53 || keycode == 65307)
 		exit_game(game);
-	else if (keycode == 13 || keycode == 126)
+	else if (keycode == 13 || keycode == 126 || keycode == 65362)
 		move_player(game, -1, 0);
-	else if (keycode == 1 || keycode == 125)
+	else if (keycode == 1 || keycode == 125 || keycode == 65364)
 		move_player(game, 1, 0);
-	else if (keycode == 0 || keycode == 123)
+	else if (keycode == 0 || keycode == 123 || keycode == 65361)
 		move_player(game, 0, -1);
-	else if (keycode == 2 || keycode == 124)
+	else if (keycode == 2 || keycode == 124 || keycode == 65363)
 		move_player(game, 0, 1);
 	return (0);
 }
