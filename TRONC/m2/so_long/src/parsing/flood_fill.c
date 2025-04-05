@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:12:55 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/04 20:21:56 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/05 16:21:21 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void	flood(t_game *game, char **mapcopy, int p_y, int p_x)
 		|| mapcopy[p_y][p_x] == '1'
 		|| mapcopy[p_y][p_x] == 'F')
 		return ;
+	else if (mapcopy[p_y][p_x] == 'E')
+	{
+		mapcopy[p_y][p_x] = 'F';
+		return ;
+	}
 	mapcopy[p_y][p_x] = 'F';
 	flood(game, mapcopy, p_y + 1, p_x);
 	flood(game, mapcopy, p_y - 1, p_x);
