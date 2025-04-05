@@ -1,8 +1,4 @@
 # **************************************************************************** #
-#                                 MAKEFILE 2.1                                 #
-# **************************************************************************** #
-
-# **************************************************************************** #
 #                                 MAKEFILE                                     #
 # **************************************************************************** #
 
@@ -13,12 +9,20 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 INC_DIR		= include
 LIBFT_DIR	= $(INC_DIR)/libft_x
-MLX_DIR		= $(INC_DIR)/minilibx-linux
+
+# Platform detection (automatic)
+UNAME_S		:= $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	MLX_DIR		= $(INC_DIR)/minilibx_opengl
+	MLX_FLAGS	= -framework OpenGL -framework AppKit -L$(MLX_DIR) -lmlx
+else
+	MLX_DIR		= $(INC_DIR)/minilibx-linux
+	MLX_FLAGS	= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+endif
 
 # Compiler and Flags
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
-MLX_FLAGS	= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 # Sources
 SRCS		= $(shell find $(SRC_DIR) -name '*.c')
@@ -51,7 +55,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
-# Build MiniLibX Linux
+# Build MiniLibX
 $(MLX_LIB):
 	@$(MAKE) -C $(MLX_DIR)
 
@@ -67,4 +71,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
