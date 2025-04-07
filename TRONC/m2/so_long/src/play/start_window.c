@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:07:36 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/05 17:23:57 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:51:04 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,18 @@ void	init_textures(t_game *game)
 	if (!game->img_player || !game->img_player_h || !game->img_player_b
 		|| !game->img_player_g || !game->img_player_d || !game->img_floor
 		|| !game->img_wall || !game->img_collect || !game->img_exit)
-		error("!img_loading.xpm\n");
+		error(game, "!img_loading.xpm\n");
 }
 
 void	start_window(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		error("!mlx_init\n");
-	game->win = mlx_new_window(game->mlx, ((TILE * game->size_x) - 1),
+		error(game, "!mlx_init\n");
+	game->win = mlx_new_window(game->mlx, ((TILE - 2) * game->size_x),
 			(TILE * game->size_y), "OMAR LE DAUPHIN");
 	if (!game->win)
-		error("!mlx_new_windows\n");
+		error(game, "!mlx_new_windows\n");
 	init_textures(game);
 	init_map(game);
 	mlx_hook(game->win, 2, 1L << 0, handle_keypress, game);

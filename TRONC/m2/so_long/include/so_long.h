@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/07 09:56:59 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/04/07 16:44:17 by anturtsc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -6,23 +18,26 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "mlx.h"
-# include "libft/libft.h"
+# include "libft_x/libft/libft.h"
+# include "libft_x/ft_printf/ft_printf.h"
+// # include "libft/libft.h"
+// # include "libft_x/ft_printf/ft_printf.h"
 
 # define BUFFER_SIZE 42
 
-typedef struct	s_game
+typedef struct s_game
 {
 	char	**map;
 	char	**mapcopy;
-	int	size_y;
-	int	size_x;
-	int	P_y;
-	int	P_x;
-	int	P;
-	int	C;
-	int	E;
-	int	moves;
-	int	C_collected;
+	int		size_y;
+	int		size_x;
+	int		p_y;
+	int		p_x;
+	int		p;
+	int		c;
+	int		e;
+	int		moves;
+	int		c_collected;
 	void	*mlx;
 	void	*win;
 	void	*img_player_h;
@@ -35,45 +50,50 @@ typedef struct	s_game
 	void	*img_collect;
 	void	*img_exit;
 }	t_game;
- //		SO_LONG			//
+
+//		SO_LONG			//
 
 //	PARSING
 void	parsing(t_game *game, int ac, char **av);
 void	load_map(char *file, t_game *game);
-int     count_line(char *file);
+int		count_line(t_game *game, char *file);
 //	CHECK_MAP
 void	check_map(t_game *game, char **tab);
-void    check_line(t_game *game, char *line, int border);
+void	check_line(t_game *game, char *line, int border);
 void	check_tiles(t_game *game);
 void	increment_tiles(char c, t_game *game);
 //	FLOOD_FILL
-void     flood_fill(t_game *game);
-void     verif_access(char **mapcopy, t_game *game);
-void    flood(t_game *game, char  **mapcpy, int P_y, int P_x);
-void    find_P(char **mapcopy, int *player_y, int *player_x);
-char    **ft_tabcpy(char **tab);
+void	flood_fill(t_game *game);
+void	verif_access(char **mapcopy, t_game *game);
+void	flood(t_game *game, char **mapcpy, int P_y, int P_x);
+void	find_P(char **mapcopy, int *player_y, int *player_x);
+char	**ft_tabcpy(char **tab);
 //	GET_NEXT_LINE
 char	*get_next_line(int fd);
 char	*extract_line(char **stored);
 
 //	PLAY
 //	START_WINDOW
-void    start_window(t_game *game);
-void init_textures(t_game *game);
-void init_map(t_game *game);
-void    draw_tile(t_game *game, void *img, int x, int y);
+void	start_window(t_game *game);
+void	init_textures(t_game *game);
+void	init_map(t_game *game);
+void	draw_tile(t_game *game, void *img, int x, int y);
 
 //	MOVE
-void    move_player(t_game *game, int y, int x);
-int     handle_keypress(int keycode, t_game *game);
-void    new_player(t_game *game, int new_y, int new_x);
-void    change_sprite(t_game *game, int y, int x);
-void exit_game(t_game *game);
+void	move_player(t_game *game, int y, int x);
+int		handle_keypress(int keycode, t_game *game);
+void	new_player(t_game *game, int new_y, int new_x);
+void	change_sprite(t_game *game, int y, int x);
+void	exit_game(t_game *game);
 
 //	UTILS
-void    error(char *str);
-int	ft_strlen_tab(char **tab);
-char    *ft_strnstr(const char *str, const char *to_find, size_t n);
+void	error(t_game *game, char *str);
+void    free_all(t_game *game);
+int     close_game(t_game *game);
+void    free_img(t_game *game);
+void    free_map(char **map);
+int		ft_strlen_tab(char **tab);
+char	*ft_strnstr(const char *str, const char *to_find, size_t n);
 void	ft_putstr(char *str);
-int	close_game(t_game *game);
-# endif
+int		close_game(t_game *game);
+#endif

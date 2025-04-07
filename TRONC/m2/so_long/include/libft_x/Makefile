@@ -12,7 +12,7 @@ all: $(LIBFT_A) $(PRINTF_A) $(GNL_A)
 	cp $(LIBFT_A) $(NAME)
 	ar -x $(PRINTF_A)
 	ar -x $(GNL_A)
-	ar rcs $(NAME) *.o
+	ar -rcs $(NAME) *.o
 	rm -f *.o
 	@echo "\033[38;5;198m 888      8888888 888888b.   8888888888 88888888888                 Y88b   d88P\033[0m"
 	@echo "\033[38;5;199m 888        888   888  \"88b  888            888                      Y88b d88P \033[0m"

@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:12:55 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/05 16:21:21 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:33:54 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	check_access(char **mapcopy, t_game *game)
 		{
 			if ((game->map[y][x] == 'C' || game->map[y][x] == 'E')
 					&& mapcopy[y][x] != 'F')
-				error("!flood fill");
+				error(game, "!flood fill");
 			x++;
 		}
 		y++;
@@ -102,10 +102,10 @@ void	flood_fill(t_game *game)
 
 	mapcopy = ft_tabcpy(game->map);
 	if (!mapcopy)
-		error ("!mapcopy");
+		error (game,"!mapcopy");
 	find_player(mapcopy, &p_y, &p_x);
 	flood(game, mapcopy, p_y, p_x);
 	check_access(mapcopy, game);
-	game->P_y = p_y;
-	game->P_x = p_x;
+	game->p_y = p_y;
+	game->p_x = p_x;
 }

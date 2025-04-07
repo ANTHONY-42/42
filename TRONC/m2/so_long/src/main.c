@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/01 18:29:08 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:02:04 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	main(int ac, char **av)
 
 	game = malloc(sizeof(t_game));
 	if (!game)
-		error("!game");
+		error(game, "!game");
 	parsing(game, ac, av);
 	if (!game)
-		error("!game");
+		error(game, "!game");
 	start_window(game);	
 	free(game);
 	return (0);
