@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 10:03:30 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:08:26 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_value(t_game *game)
 {
-	//game->map = NULL;
 	game->mapcopy = NULL;
 	game->size_y = ft_strlen_tab(game->map);
 	game->size_x = ft_strlen(game->map[1]);
@@ -87,7 +86,7 @@ void	load_map(char *file, t_game *game)
 
 void	parsing(t_game *game, int ac, char **av)
 {
-	if (!(ac == 2))
+	if (ac != 2)
 		error(game, "!ac == 2\n");
 	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
 		error(game, "!.ber\n");

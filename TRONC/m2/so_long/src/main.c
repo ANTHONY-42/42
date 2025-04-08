@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:20:15 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 10:03:49 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:06:50 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 	parsing(game, ac, av);
 	if (!game)
 		error(game, "!game");
-	start_window(game);	
+	start_window(game);
 	free_all(game);
 	return (0);
 }

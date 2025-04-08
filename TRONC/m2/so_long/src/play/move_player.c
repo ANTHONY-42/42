@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:29:46 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/07 14:31:08 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:20:12 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ void	move_player(t_game *game, int y, int x)
 	if (next_tile == '1')
 		return ;
 	if (next_tile == 'C')
-	{
 		game->c_collected++;
-		game->map[new_y][new_x] = '0';
-	}
 	if (next_tile == 'E')
 	{
 		if (game->c == game->c_collected)
-			close_game(game);
-		else
-			return ;
+			mlx_loop_end(game->mlx);
+		return ;
 	}
 	game->map[game->p_y][game->p_x] = '0';
 	new_player(game, new_y, new_x);
@@ -65,7 +61,7 @@ void	move_player(t_game *game, int y, int x)
 int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == 53 || keycode == 65307)
-		close_game(game);
+		mlx_loop_end(game->mlx);
 	else if (keycode == 13 || keycode == 126 || keycode == 65362)
 		move_player(game, -1, 0);
 	else if (keycode == 1 || keycode == 125 || keycode == 65364)

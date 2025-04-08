@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 15:28:14 by anturtsc          #+#    #+#             */
+/*   Updated: 2025/04/08 16:05:46 by anturtsc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	ft_putstr(char *str)
@@ -12,18 +24,6 @@ void	ft_putstr(char *str)
 	}
 }
 
-// int	ft_strlen(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!str)
-// 		return (0);
-// 	while (str[i])
-// 		i++;
-// 	return (i);
-// }
-
 int	ft_strlen_tab(char **tab)
 {
 	int	i;
@@ -33,32 +33,6 @@ int	ft_strlen_tab(char **tab)
 		i++;
 	return (i);
 }
-
-// char	*ft_strdup(const char *s)
-// {
-// 	int		i;
-// 	int		len;
-// 	char	*dest;
-
-// 	i = 0;
-// 	len = 0;
-// 	while (s[len])
-// 	{
-// 		len++;
-// 	}
-// 	dest = malloc((len + 1) * sizeof(char));
-// 	if (dest == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	while (s[i])
-// 	{
-// 		dest[i] = s[i];
-// 		i++;
-// 	}
-// 	dest[i] = '\0';
-// 	return (dest);
-// }
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 {
@@ -85,4 +59,3 @@ char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 	}
 	return (NULL);
 }
-

@@ -24,9 +24,19 @@ endif
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 
-# Sources
-SRCS		= $(shell find $(SRC_DIR) -name '*.c')
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# Sources (explicit listing, no wildcard)
+SRCS = \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/parsing/check_map.c \
+	$(SRC_DIR)/parsing/flood_fill.c \
+	$(SRC_DIR)/parsing/parsing.c \
+	$(SRC_DIR)/play/move_player.c \
+	$(SRC_DIR)/play/start_window.c \
+	$(SRC_DIR)/utils/free.c \
+	$(SRC_DIR)/utils/utils.c
+
+# Objects
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Libs
 LIBX_DIR = include/libft_x/
@@ -55,6 +65,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # Build libft
 $(LIBX_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
+
 # Build MiniLibX
 $(MLX_LIB):
 	@$(MAKE) -C $(MLX_DIR)
@@ -71,3 +82,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

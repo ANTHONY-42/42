@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:12:55 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 10:32:34 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:07:42 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	flood_fill(t_game *game)
 
 	game->mapcopy = ft_tabcpy(game->map);
 	if (!game->mapcopy)
-		error (game,"!mapcopy");
+		error (game, "!mapcopy");
 	find_player(game, &p_y, &p_x);
 	flood(game, p_y, p_x);
 	check_access(game);

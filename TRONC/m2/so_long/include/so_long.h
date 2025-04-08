@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 09:56:59 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 10:30:55 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:10:18 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // # include "libft/libft.h"
 // # include "libft_x/ft_printf/ft_printf.h"
 
-# define BUFFER_SIZE 42
+// # define BUFFER_SIZE 42
 
 typedef struct s_game
 {
@@ -64,9 +64,7 @@ void	check_tiles(t_game *game);
 void	increment_tiles(char c, t_game *game);
 //	FLOOD_FILL
 void	flood_fill(t_game *game);
-void	verif_access(t_game *game);
 void	flood(t_game *game, int p_y, int p_x);
-void	find_P(t_game *game, int *player_y, int *player_x);
 char	**ft_tabcpy(char **tab);
 //	GET_NEXT_LINE
 char	*get_next_line(int fd);
@@ -77,7 +75,6 @@ char	*extract_line(char **stored);
 void	start_window(t_game *game);
 void	init_textures(t_game *game);
 void	init_map(t_game *game);
-void	draw_tile(t_game *game, void *img, int x, int y);
 
 //	MOVE
 void	move_player(t_game *game, int y, int x);
@@ -88,10 +85,10 @@ void	exit_game(t_game *game);
 
 //	UTILS
 void	error(t_game *game, char *str);
-void    free_all(t_game *game);
-int     close_game(t_game *game);
-void    free_img(t_game *game);
-void    free_map(char **map);
+int		free_all(t_game *game);
+int		close_game(t_game *game);
+void	free_img(t_game *game);
+void	free_map(char **map);
 int		ft_strlen_tab(char **tab);
 char	*ft_strnstr(const char *str, const char *to_find, size_t n);
 void	ft_putstr(char *str);
