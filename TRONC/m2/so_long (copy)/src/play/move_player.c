@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouv.c                                             :+:      :+:    :+:   */
+/*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:29:46 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 15:20:12 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:56:49 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == 53 || keycode == 65307)
 		mlx_loop_end(game->mlx);
-	else if (keycode == 13 || keycode == 126 || keycode == 65362)
+	else if (keycode == 126 || keycode == 65362 || keycode == 'w')
 		move_player(game, -1, 0);
-	else if (keycode == 1 || keycode == 125 || keycode == 65364)
+	else if (keycode == 125 || keycode == 65364 || keycode == 's')
 		move_player(game, 1, 0);
-	else if (keycode == 0 || keycode == 123 || keycode == 65361)
+	else if (keycode == 123 || keycode == 65361 || keycode == 'a')
 		move_player(game, 0, -1);
-	else if (keycode == 2 || keycode == 124 || keycode == 65363)
+	else if (keycode == 124 || keycode == 65363 || keycode == 'd')
 		move_player(game, 0, 1);
 	return (0);
 }
