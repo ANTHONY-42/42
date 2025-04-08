@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 09:56:59 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/07 16:44:17 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:30:55 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	check_tiles(t_game *game);
 void	increment_tiles(char c, t_game *game);
 //	FLOOD_FILL
 void	flood_fill(t_game *game);
-void	verif_access(char **mapcopy, t_game *game);
-void	flood(t_game *game, char **mapcpy, int P_y, int P_x);
-void	find_P(char **mapcopy, int *player_y, int *player_x);
+void	verif_access(t_game *game);
+void	flood(t_game *game, int p_y, int p_x);
+void	find_P(t_game *game, int *player_y, int *player_x);
 char	**ft_tabcpy(char **tab);
 //	GET_NEXT_LINE
 char	*get_next_line(int fd);

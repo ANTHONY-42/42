@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:04:58 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/11/26 15:15:02 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:19:41 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 

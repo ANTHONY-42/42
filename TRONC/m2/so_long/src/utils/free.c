@@ -1,21 +1,34 @@
 #include "so_long.h"
 
+// void	free_map(char **map)
+// {
+// 	int	x;
+// 	int	y;
+
+// 	y = 0;
+// 	while (map[y])
+// 	{
+// 		x = 0;
+// 		while (map[y][x])
+// 		{
+// 			free(&map[y][x]);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+
 void	free_map(char **map)
 {
-	int	x;
 	int	y;
 
 	y = 0;
 	while (map[y])
 	{
-		x = 0;
-		while (map[y][x])
-		{
-			free(&map[y][x]);
-			x++;
-		}
+		free(map[y]);
 		y++;
 	}
+	free(map);
 }
 
 void	free_img(t_game *game)
@@ -28,8 +41,8 @@ void	free_img(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_player_g);
 	if (game->img_player_d)
 		mlx_destroy_image(game->mlx, game->img_player_d);
-	if (game->img_player)
-		mlx_destroy_image(game->mlx, game->img_player);
+	// if (game->img_player)
+	// 	mlx_destroy_image(game->mlx, game->img_player);
 	if (game->img_wall)
 		mlx_destroy_image(game->mlx, game->img_wall);
 	if (game->img_floor)
@@ -45,21 +58,23 @@ int	close_game(t_game *game)
 	if (game->win)
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		//free(game->win);
+		free(game->win);
 	}
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
-		//free(game->mlx);
+		free(game->mlx);
 	}
 	return (0);
 }
 
 void	free_all(t_game *game)
 {
-	free_map(game->map);
-	free_map(game->mapcopy);
 	free_img(game);
+	if (game->map)
+		free_map(game->map);
+	if (game->mapcopy)
+		free_map(game->mapcopy);
 	close_game(game);
         exit(1);
 }

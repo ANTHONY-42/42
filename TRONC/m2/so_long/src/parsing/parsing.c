@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/07 17:00:18 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:03:30 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	load_map(char *file, t_game *game)
 
 	i = 0;
 	game->map = malloc(sizeof(char *) * (count_line(game, file) + 1));
+	if (!game->map)
+		error(game, "!malloc map\n");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		error(game, "!fd\n");
