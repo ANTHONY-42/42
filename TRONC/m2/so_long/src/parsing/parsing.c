@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:11:44 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:08:26 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:42:39 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	count_line(t_game *game, char *file)
 	count = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error(game, "!fd");
+	 	parsing_error(game, "!fd\n");
 	line = get_next_line(fd);
 	if (!line)
-		error(game, "!line");
+	 	parsing_error(game, "!line\n");
 	while (line)
 	{
 		count++;
@@ -69,10 +69,10 @@ void	load_map(char *file, t_game *game)
 	i = 0;
 	game->map = malloc(sizeof(char *) * (count_line(game, file) + 1));
 	if (!game->map)
-		error(game, "!malloc map\n");
+		parsing_error(game, "!malloc map\n");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error(game, "!fd\n");
+	 	parsing_error(game, "!fd\n");
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -84,15 +84,21 @@ void	load_map(char *file, t_game *game)
 	close(fd);
 }
 
-void	parsing(t_game *game, int ac, char **av)
+t_game	*parsing(int ac, char **av)
 {
+	t_game	*game;
+
+	game = malloc(sizeof(t_game));
+	if (!game)
+	 	parsing_error(game, "!game\n");
 	if (ac != 2)
-		error(game, "!ac == 2\n");
+	 	parsing_error(game, "!ac == 2\n");
 	if (!ft_strnstr(av[1], ".ber", ft_strlen(av[1])))
-		error(game, "!.ber\n");
+	 	parsing_error(game, "!.ber\n");
 	load_map(av[1], game);
 	if (!game->map)
-		error(game, "load_map\n");
+		parsing_error(game, "load_map\n");	
 	init_value(game);
 	check_map(game, game->map);
+	return (game);
 }

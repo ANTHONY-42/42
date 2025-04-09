@@ -6,7 +6,7 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 09:56:59 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:10:18 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:44:29 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_game
 //		SO_LONG			//
 
 //	PARSING
-void	parsing(t_game *game, int ac, char **av);
+t_game	*parsing(int ac, char **av);
 void	load_map(char *file, t_game *game);
 int		count_line(t_game *game, char *file);
 //	CHECK_MAP
@@ -93,4 +93,6 @@ int		ft_strlen_tab(char **tab);
 char	*ft_strnstr(const char *str, const char *to_find, size_t n);
 void	ft_putstr(char *str);
 int		close_game(t_game *game);
+void	parsing_error(t_game *game, char *str);
+
 #endif

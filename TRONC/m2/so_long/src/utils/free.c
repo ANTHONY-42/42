@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:04:29 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/04/08 16:04:46 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:28:15 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ void	error(t_game *game, char *str)
 {
 	ft_printf("Error\n");
 	ft_printf("%s", str);
-	free_all(game);
+	if (game)
+	{
+		free_all(game);
+	}
 	exit (1);
+}
+void parsing_error(t_game *game, char *str)
+{
+	free(game);
+	error(NULL, str);	
 }
