@@ -1,5 +1,6 @@
 #include "pipex.h"
 
+<<<<<<< Updated upstream
 void	pipex(int ac, char **av, char **envp)
 {
 	int	input;
@@ -13,6 +14,14 @@ void	pipex(int ac, char **av, char **envp)
 	if (output < 0)
 		error("")
 
+=======
+void	pipex(int ac, char **av, char **envp, int input, int output)
+{
+	int	pipe_fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+
+>>>>>>> Stashed changes
 	if (pipe(pipe_fd) == -1)
 		error("pipe");
 	
@@ -21,7 +30,11 @@ void	pipex(int ac, char **av, char **envp)
 		error("fork 1");
 	if (pid1 == 0)
 	{
+<<<<<<< Updated upstream
 		dup2(pipe_fd[0], 0);
 		execve(av[2]);
+=======
+		dup2(input, 0);
+>>>>>>> Stashed changes
 	}
 }
