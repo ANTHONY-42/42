@@ -1,3 +1,5 @@
+#include "pipex.h"
+
 void	parsing(int ac, char **av)
 {
 

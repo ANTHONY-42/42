@@ -7,13 +7,11 @@
 # include <sys/wait.h>
 # include <stdio.h>
 # include <string.h>
-# include <errno.h>
 
-typedef struct	s_args
+typedef struct	s_pipex
 {
-	int	input;
-
-	int	output;
-}
-
+	int	infile;
+	int	outfile;
+	int	pipefd[2];
+}	t_pipex;
 #endif
