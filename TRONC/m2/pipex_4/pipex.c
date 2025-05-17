@@ -52,7 +52,7 @@ void	process_2(char **av, char **envp, t_pipex *fd)
 
 void	pipex(char **av, char **envp, t_pipex *fd)
 {
-	process_(av, envp, fd);
+	process_1(av, envp, fd);
 	waitpid(pid1, NULL, 0);
 	process_2(av, envp, fd);
 	waitpid(pid2, NULL, 0);

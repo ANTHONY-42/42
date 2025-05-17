@@ -10,8 +10,8 @@
 
 typedef struct	s_pipex
 {
-	int	infile;
-	int	outfile;
+	int	input;
+	int	output;
 	int	pipefd[2];
 }	t_pipex;
 #endif
