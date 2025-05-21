@@ -18,34 +18,32 @@ void	exec_cmd(char *arg, char **envp)
 
 void	process_1(char **av, char **envp, t_pipex *fd)
 {
-	pid_t	pid_1;
-
-	pid_1 = fork();
-	if (pid_1 < 0)
+	fd->pid_1 = fork();
+	if (fd->pid_1 < 0)
 		error("fork_1");
-	if (pid_1 == 0)
+	if (fd->pid_1 == 0)
 	{
-		dup2(fd.infile, 0);
-		dupe2(fd.pipe[1], 1);
-		close(fd.pipe[0]);
-		close(fd.pipe[1]);
+		dup2(fd->infile, 0);
+		dup2(fd->pipefd[1], 1);
+		close(fd->infile);
+		close(fd->pipefd[0]);
+		close(fd->pipefd[1]);
 		exec_cmd(av[2], envp);
 	}
 }
 
+//./pipex infile cmd1 cmd2 outfile
 void	process_2(char **av, char **envp, t_pipex *fd)
 {
-	pid_t	pid_2;
-
-	pid_2 = fork();
+	fd->pid_2 = fork();
 	if (pid_2 < 0)
 		error("fork_2");
 	if (pid_2 == 0)
 	{
-		dup2(fd.pipefd[0], 0);
-		dup2(fd.outfile, 1);
-		close(fd.pipefd[0]);
-		close(fd.pipefd[1]);
+		dup2(fd->pipefd[0], 0);
+		dup2(fd->output, 1);
+		close(fd->pipefd[0]);
+		close(fd->output);
 		exec_cmd(av[3], envp);
 	}
 }
@@ -53,7 +51,7 @@ void	process_2(char **av, char **envp, t_pipex *fd)
 void	pipex(char **av, char **envp, t_pipex *fd)
 {
 	process_1(av, envp, fd);
-	waitpid(pid1, NULL, 0);
 	process_2(av, envp, fd);
-	waitpid(pid2, NULL, 0);
+	waitpid(fd->pid_1, NULL, 0);
+	waitpid(fd->pid_2, NULL, 0);
 }

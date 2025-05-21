@@ -2,7 +2,7 @@
 
 void	close_fd(t_pipex *fd)
 {
-	if (fd.input > 0)
+	if (fd->input > 0)
 		close(fd.input);
 	if (fd.output > 0)
 		close(fd.output);
