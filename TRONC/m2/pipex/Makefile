@@ -14,7 +14,6 @@ LIBFT_DIR = $(INC_DIR)/libft_2.0/libft
 SRCS = \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/pipex.c \
-	$(SRC_DIR)/parsing.c \
 	$(SRC_DIR)/error.c \
 	$(SRC_DIR)/path.c
 
@@ -23,7 +22,7 @@ OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Compilation
 CC	= cc
-CFLAGS	= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)
+CFLAGS	= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR) -g
 
 # Libft
 LIBFT_A	= $(LIBFT_DIR)/libft.a

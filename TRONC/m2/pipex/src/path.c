@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 20:20:13 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/05/21 20:23:40 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:35:41 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ char	*absolute_path(char **path, char *cmd)
 {
 	int		i;
 	char	*pathname;
+	char	*path_tmp;
 
 	i = 0;
 	while (path[i])
 	{
-		pathname = ft_strjoin(ft_strjoin(path[i], "/"), cmd);
+		path_tmp = ft_strjoin(path[i], "/");
+		pathname = ft_strjoin(path_tmp, cmd);
+		free(path_tmp);
 		if (access(pathname, X_OK) == 0)
-		{
-			free_path(path);
 			return (pathname);
-		}
 		free(pathname);
 		i++;
 	}
@@ -49,6 +49,8 @@ char	*get_path(char **envp, char *cmd)
 	char	*pathname;
 
 	i = 0;
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
@@ -57,5 +59,6 @@ char	*get_path(char **envp, char *cmd)
 	if (!path)
 		return (NULL);
 	pathname = absolute_path(path, cmd);
+	free_path(path);
 	return (pathname);
 }

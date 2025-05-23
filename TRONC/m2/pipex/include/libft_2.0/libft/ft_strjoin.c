@@ -6,10 +6,9 @@
 /*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:40:34 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/05/21 17:51:22 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:36:30 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdlib.h>
 #include "libft.h"

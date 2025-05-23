@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anturtsc <anturtsc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:31:57 by anturtsc          #+#    #+#             */
-/*   Updated: 2024/11/27 14:37:41 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:45:06 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,17 @@ static void	free_split(char **split)
 	free(split);
 }
 
+int	security(char const *s, char **split)
+{
+	if (!s || !split)
+	{
+		if (split)
+			free(split);
+		return (1);
+	}
+	return (0);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	int		i;
@@ -73,7 +84,7 @@ char	**ft_split(char const *s, char c)
 
 	i = ((j = 0));
 	split = (char **)malloc((count_word(s, c) + 1) * sizeof(char *));
-	if (!s || !split)
+	if (security(s, split))
 		return (NULL);
 	while (s[i])
 	{

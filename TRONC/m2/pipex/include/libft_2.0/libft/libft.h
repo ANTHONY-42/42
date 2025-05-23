@@ -6,7 +6,7 @@
 /*   By: anturtsc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:33:56 by anturtsc          #+#    #+#             */
-/*   Updated: 2025/03/31 16:39:35 by anturtsc         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:44:32 by anturtsc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
 
-int				ft_strlen(const char *s);
-int				ft_tablen(char **tab);
+int					ft_strlen(const char *s);
+int					ft_tablen(char **tab);
 void				*ft_memset(void *s, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -62,7 +62,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
 // fomction en plus
-void    ft_putstr(char *str);
+void				ft_putstr(char *str);
 // Prototypes des fonctions de la liste (pour la partie bonus)
 // typedef struct s_list
 // {
