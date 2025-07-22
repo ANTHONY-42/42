@@ -1,0 +1,42 @@
+├── LEVEL-1
+│   ├── broken_gnl
+│   │   ├── brocken_gnl.c
+│   │   └── file.txt
+│   ├── filter
+│   │   ├── filter.c
+│   │   ├── filter2.c
+│   │   ├── not_official_subject.txt
+│   │   └── subject_filter
+│   └── scanf
+│       ├── not_official_subject.txt
+│       ├── s.c
+│       ├── scanf2.c
+│       └── subject_ft_scanf.txt
+└── LEVEL-2
+    ├── n_queens
+    │   ├── n_queens.c
+    │   └── subject_n_queens.txt
+    ├── permutations
+    │   ├── permutations.c
+    │   ├── permutations2.c
+    │   └── subject_permutations.txt
+    ├── powerset
+    │   ├── powerset.c
+    │   └── subject_powerset.txt
+    ├── rip
+    │   ├── rip2.c
+    │   └── subject_rip.txt
+    └── tsp
+        ├── subject_tsp.txt
+        ├── tests
+        │   ├── 0.00
+        │   ├── 112.06
+        │   ├── 168.00
+        │   ├── 283.56
+        │   ├── 309.82
+        │   ├── 4.00
+        │   ├── 503.45
+        │   ├── 6.00
+        │   └── example_8.00
+        ├── tsp_give.c
+        └── tsp.c
