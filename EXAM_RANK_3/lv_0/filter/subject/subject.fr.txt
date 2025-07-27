@@ -1,0 +1,43 @@
+Dossier attendus				: filter
+Fichiers attendus				: filter.c
+Fonctions et globaux autorisés	: read, write, strlen, memmem, memmove, malloc,
+calloc, realloc, free, printf, fprintf, stdout, stderr, perror
+--------------------------------------------------------------------------------
+
+Écrivez un programme qui prendra un et un seul argument `s`.
+
+Votre programme lira ensuite depuis l'entrée standard (stdin) et écrira tout le
+contenu lu vers la sortie standard (stdout), sauf que chaque occurrence de `s` devra
+être remplacée par `*` (autant de caracteres `*` que la longueur de `s`).
+
+Votre programme sera testé avec des tailles tampon aléatoires, et utillisant une
+fonction `read` modifié. Par conséquent, le tampon defini dans votre programme
+sera rempli avec un nombre different de caractere a chaque appel.
+
+Par exemple :
+
+./filter hello
+agira de la même manière que :
+sed 's/hello/*****/g'
+
+./filter abc
+agira de la même manière que :
+sed 's/abc/***/g'
+
+
+Plus généralement votre programme doit être l'équivalent du script shell `filter.sh`
+présent dans ce répertoire (vous pouvez comparer votre programme avec celui-ci).
+
+En cas d'erreur pendant un 'read' ou un 'malloc', vous devez écrire "Error: "
+suivi du message d'erreur sur la sortie d'error standard (stderr) et retourner 1.
+
+Si le programme est appelé sans argument, avec un argument vide ou avec
+plusieurs arguments, il doit retourner 1.
+
+Exemple, ceci doit fonctionner :
+
+$> echo “abcdefaaaabcdeabcabcdabc” | ./filter abc | cat -e
+***defaaa***de******d***$
+$> echo 'ababcabababc' | ./filtre ababc | cat -e
+*****ab*****$
+$
