@@ -12,13 +12,8 @@ LIBFT_DIR	= $(INC_DIR)/libft_x
 
 # Platform detection (automatic)
 UNAME_S		:= $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
 	MLX_DIR		= $(INC_DIR)/minilibx_opengl
 	MLX_FLAGS	= -framework OpenGL -framework AppKit -L$(MLX_DIR) -lmlx
-else
-	MLX_DIR		= $(INC_DIR)/minilibx-linux
-	MLX_FLAGS	= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
-endif
 
 # Compiler and Flags
 CC			= cc
