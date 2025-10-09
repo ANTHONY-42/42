@@ -41,21 +41,41 @@ typedef	struct	s_data
 	t_philo		*philo;
 }	t_data;
 
-int     stopit_now(t_data *data);
-void	pars_arg(int ac, char **av, t_data *data);
-long	ft_atoi(char *str);
-void	error(char *str, int i);
-long long	get_time_ms(void);
-void		print_msg(t_data *data, int id, const char *msg);
-void	*philosopher_routine(void *arg);
-void	*monitoring(void *arg);
-void	fork_unlock(t_philo *philo);
-int	init_data(t_data *data);
+//	PARS_ARG;
+int     is_digit(char *str);
+void    verif_min_max(long arg, int i, long min, long max);
+void    init_config(int ac, char **av, t_data *data);
+void    pars_arg(int ac, char **av, t_data *data);
+
+
+//	INIT;
+int     init_data(t_data *data);
 void    init_philo(t_data *data);
 void    start_thread(t_data *data);
-void    lock_last_meal(t_philo *philo);
 void    destroy_all(t_data *data);
+
+	//	PHILO;
+void    thinking(t_philo *philo);
+void    take_fork(t_philo *philo);
+void    eating(t_philo *philo);
+
+void    sleeping(t_philo *philo);
+void    *philosopher_routine(void *arg);
+
+	//	MONITORING;
+int     death_loop(t_data *data);
+void    *monitoring(void *arg);
+
+	//	LOCK_UNLOCK;
+void    fork_unlock(t_philo *philo);
 void    last_meal_lock(t_philo *philo);
-void	precise_sleep(int sleep);
+
+	//	UTILS;
+void    precise_sleep(int sleep, t_data *data);
+int     stopit_now(t_data *data);
+long    ft_atoi(char *str);
+void    error(char *str, int i);
+long long       get_time_ms(void);
+void    print_msg(t_data *data, int id, const char *msg);
 
 #endif

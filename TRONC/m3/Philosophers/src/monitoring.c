@@ -23,7 +23,7 @@ int	death_loop(t_data *data)
 			data->all_finished = 0;
 		pthread_mutex_unlock(&data->philo[i].meal_lock);
 		i++;
-	precise_sleep(1);
+	precise_sleep(1, data);
 	}
 	return (0);
 }
@@ -44,7 +44,7 @@ void	*monitoring(void *arg)
 			pthread_mutex_unlock(&data->stop_lock);
 			return (NULL);
 		}
-	precise_sleep(1);
+	precise_sleep(1, data);
 	}
 	return (NULL);
 }

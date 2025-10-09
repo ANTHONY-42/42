@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	precise_sleep(int sleep)
+void	precise_sleep(int sleep, t_data *data)
 {
 	long	start_time;
 	long	past_time;
@@ -9,6 +9,8 @@ void	precise_sleep(int sleep)
 	past_time = get_time_ms() - start_time;;
 	while(past_time < sleep)
 	{
+		if (stopit_now(data))
+		return;
 		if (sleep - past_time > 10)
 			usleep((sleep - past_time) * 100);
 		else
