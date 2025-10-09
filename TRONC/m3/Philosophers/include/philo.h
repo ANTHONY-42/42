@@ -56,5 +56,6 @@ void    start_thread(t_data *data);
 void    lock_last_meal(t_philo *philo);
 void    destroy_all(t_data *data);
 void    last_meal_lock(t_philo *philo);
+void	precise_sleep(int sleep);
 
 #endif

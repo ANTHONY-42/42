@@ -13,11 +13,11 @@ void	thinking(t_philo *philo)
 	x = data->config.TIME_TO_EAT + data->config.TIME_TO_SLEEP;
 	y = data->config.TIME_TO_DIE - x;
 	time = y / 2;
-	if (time < 10)
+	if (time < 50)
 		return;
 	else if (y > 200)
 		time = 200;
-	usleep(time * 1000);
+	precise_sleep(time);
 }
 /*
 void	thinking(t_philo *philo)
@@ -70,7 +70,7 @@ void	eating(t_philo *philo)
 
 	last_meal_lock(philo);
 	print_msg(data, philo->id, "mange");
-	usleep(data->config.TIME_TO_EAT * 1000);
+	precise_sleep(data->config.TIME_TO_EAT);
 	
 	fork_unlock(philo);
 	if (data->config.MUST_EAT != -1)
@@ -83,7 +83,7 @@ void	sleeping(t_philo *philo)
 
 	data = philo->data;
 	print_msg(data, philo->id, "dort");
-	usleep(data->config.TIME_TO_SLEEP * 1000);
+	precise_sleep(data->config.TIME_TO_SLEEP);
 }
 
 void	*philosopher_routine(void *arg)
@@ -97,15 +97,16 @@ void	*philosopher_routine(void *arg)
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->meal_lock);
 	while (get_time_ms() < philo->data->start_time)
-		usleep(100);
+		precise_sleep(1);
 	if (philo->id %2 == 0)
-		usleep(500);
+		precise_sleep(5);
 	while (!stopit_now(data))
 	{
 		if (!stopit_now(data))
 			thinking(philo);
 		if (!stopit_now(data))
 			take_fork(philo);
+		printf("jai pris ma fork r");
 		if (!stopit_now(data))
 			eating(philo);
 		if (!stopit_now(data))
@@ -113,7 +114,6 @@ void	*philosopher_routine(void *arg)
 		if (stopit_now(data) || (data->config.MUST_EAT != -1
 				&& philo->nb_meal >= data->config.MUST_EAT))
 			break ;
-		usleep(50);
 	}
 	return (NULL);
 }

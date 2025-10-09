@@ -15,8 +15,6 @@ int	death_loop(t_data *data)
 			pthread_mutex_lock(&data->stop_lock);
 			data->stop = 1;
 			pthread_mutex_unlock(&data->stop_lock);
-			//pthread_mutex_unlock(data->philo[i].fork_l);
-			//pthread_mutex_unlock(data->philo[i].fork_r);
 			pthread_mutex_unlock(&data->philo[i].meal_lock);
 			return (1);
 		}
@@ -25,6 +23,7 @@ int	death_loop(t_data *data)
 			data->all_finished = 0;
 		pthread_mutex_unlock(&data->philo[i].meal_lock);
 		i++;
+	precise_sleep(1);
 	}
 	return (0);
 }
@@ -40,10 +39,12 @@ void	*monitoring(void *arg)
 			return (NULL);
 		if (data->all_finished && data->config.MUST_EAT != -1)
 		{
+			pthread_mutex_lock(&data->stop_lock);
 			data->stop = 1;
+			pthread_mutex_unlock(&data->stop_lock);
 			return (NULL);
 		}
-		usleep(100);
+	precise_sleep(1);
 	}
 	return (NULL);
 }

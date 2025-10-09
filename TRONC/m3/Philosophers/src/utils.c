@@ -1,5 +1,22 @@
 #include "philo.h"
 
+void	precise_sleep(int sleep)
+{
+	long	start_time;
+	long	past_time;
+
+	start_time = get_time_ms();
+	past_time = get_time_ms() - start_time;;
+	while(past_time < sleep)
+	{
+		if (sleep - past_time > 10)
+			usleep((sleep - past_time) * 100);
+		else
+			usleep(100);
+		past_time = get_time_ms() - start_time;
+	}
+}
+
 int	stopit_now(t_data *data)
 {
 	int	res;
