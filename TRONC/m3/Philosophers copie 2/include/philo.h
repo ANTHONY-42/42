@@ -1,0 +1,81 @@
+#ifndef	PHILO_H
+# define PHILO_H
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <pthread.h>
+#include <sys/time.h>
+
+typedef	struct	s_config
+{
+	int	NB_PHILOS;
+	int	TIME_TO_DIE;
+	int	TIME_TO_EAT;
+	int	TIME_TO_SLEEP;
+	int	MUST_EAT;
+}	t_config;
+
+typedef	struct	s_philo
+{
+	int	id;
+	int	nb_meal;
+	long long	last_meal;
+	pthread_t	thread_id;
+	pthread_mutex_t	*fork_l;
+	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	meal_lock;
+	struct	s_data	*data;
+}	t_philo;
+
+typedef	struct	s_data
+{
+	long long	start_time;
+	int		all_finished;
+	int		stop;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	stop_lock;
+	t_config	config;
+	t_philo		*philo;
+}	t_data;
+
+//	PARS_ARG;
+int     is_digit(char *str);
+void    verif_min_max(long arg, int i, long min, long max);
+void    init_config(int ac, char **av, t_data *data);
+void    pars_arg(int ac, char **av, t_data *data);
+
+
+//	INIT;
+int     init_data(t_data *data);
+void    init_philo(t_data *data);
+void    start_thread(t_data *data);
+void    destroy_all(t_data *data);
+
+	//	PHILO;
+void    thinking(t_philo *philo);
+void    take_fork(t_philo *philo);
+void    eating(t_philo *philo);
+
+void    sleeping(t_philo *philo);
+void    *philosopher_routine(void *arg);
+
+	//	MONITORING;
+int     death_loop(t_data *data);
+void    *monitoring(void *arg);
+
+	//	LOCK_UNLOCK;
+void    fork_unlock(t_philo *philo);
+void    last_meal_lock(t_philo *philo);
+
+	//	UTILS;
+void    precise_sleep(int sleep, t_data *data);
+int     stopit_now(t_data *data);
+long    ft_atoi(char *str);
+void    error(char *str, int i);
+long long       get_time_ms(void);
+void    print_msg(t_data *data, int id, const char *msg);
+
+#endif
